@@ -1,29 +1,27 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+    <demands/>
+    <inventory/>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import HelloWorld from './components/HelloWorld.vue';
+import Vue from 'vue';
+import Inventory from './components/Inventory.vue';
+import Demands from './components/Demands.vue';
 
-@Component({
+export default Vue.extend({
+  name: 'App',
   components: {
-    HelloWorld,
+    Inventory,
+    Demands,
   },
-})
-export default class App extends Vue {}
+  created(): void {
+    this.$store.dispatch('getInitialInventory', this.$gameData.materials);
+  },
+});
 </script>
 
-<style lang="scss">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style lang="scss" scoped>
+
 </style>
