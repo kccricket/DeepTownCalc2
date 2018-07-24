@@ -6,8 +6,6 @@ import GameDataPlugin from '@/data/game-data';
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import locale from 'element-ui/lib/locale/lang/en';
-import ElementUI from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css';
 
 Vue.use(ElementUI);
 

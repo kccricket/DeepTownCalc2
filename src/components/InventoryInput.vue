@@ -13,12 +13,12 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import Material from "@/game-types/Material";
-import { mapState } from "vuex";
+import Vue from 'vue';
+import Material from '@/game-types/Material';
+import { mapState } from 'vuex';
 
 export default Vue.extend({
-  name: "InventoryInput",
+  name: 'InventoryInput',
   props: {
     materialId: Number,
     material: Object as () => Material
@@ -42,7 +42,7 @@ export default Vue.extend({
         return this.$store.getters.getInventoryItemQuantity(this.materialId);
       },
       set(newQuantity: number): void {
-        this.$store.commit("setInventoryItemQuantity", {
+        this.$store.commit('setInventoryItemQuantity', {
           materialId: this.materialId,
           newQuantity
         });

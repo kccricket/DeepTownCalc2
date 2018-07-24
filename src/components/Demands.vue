@@ -6,15 +6,15 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
-import DemandInput from "./DemandInput.vue";
+import Vue from 'vue';
+import DemandInput from './DemandInput.vue';
 
-@Component({
+export default Vue.extend({
+  name: 'Demands',
   components: {
     DemandInput
-  }
-})
-export default class Demands extends Vue {}
+  },
+});
 </script>
 
 <style lang="scss" scoped>

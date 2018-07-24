@@ -1,8 +1,8 @@
-import Vue from "vue";
-import Vuex from "vuex";
-import InventoryItem from "@/game-types/InventoryItem";
-import DemandedItem from "@/game-types/DemandedItem";
-import Material from "@/game-types/Material";
+import Vue from 'vue';
+import Vuex from 'vuex';
+import InventoryItem from '@/game-types/InventoryItem';
+import DemandedItem from '@/game-types/DemandedItem';
+import Material from '@/game-types/Material';
 
 Vue.use(Vuex);
 
@@ -62,7 +62,7 @@ export default new Vuex.Store({
           quantity: 0
         } as InventoryItem);
       }
-      commit("setInventory", rawInventory);
+      commit('setInventory', rawInventory);
     }
   }
 });

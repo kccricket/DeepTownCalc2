@@ -1,4 +1,4 @@
-import Material from "@/game-types/Material";
+import Material from '@/game-types/Material';
 
 export interface StaticGameData {
   materials: Material[];
