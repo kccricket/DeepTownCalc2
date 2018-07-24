@@ -17,17 +17,15 @@
 
 <script lang="ts">
 export default {
-  name: 'DemandInput',
+  name: "DemandInput",
   data() {
     return {
       numb: 0,
-      selc: '',
+      selc: ""
     };
-  },
+  }
 };
 </script>
 
 <style scoped>
-
 </style>
-

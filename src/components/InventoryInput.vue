@@ -13,20 +13,22 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import Material from '@/game-types/Material';
-import { mapState } from 'vuex';
+import Vue from "vue";
+import Material from "@/game-types/Material";
+import { mapState } from "vuex";
 
 export default Vue.extend({
-  name: 'InventoryInput',
+  name: "InventoryInput",
   props: {
     materialId: Number,
-    material: Object as () => Material,
+    material: Object as () => Material
   },
   computed: {
     isMaterialDemanded(): (material: Material) => boolean {
       return (material): boolean => {
-        return this.$store.getters.maybeGetDemandForMaterial(material) !== undefined;
+        return (
+          this.$store.getters.maybeGetDemandForMaterial(material) !== undefined
+        );
       };
     },
     isDemandSatisfied(): (material: Material) => boolean {
@@ -40,10 +42,13 @@ export default Vue.extend({
         return this.$store.getters.getInventoryItemQuantity(this.materialId);
       },
       set(newQuantity: number): void {
-        this.$store.commit('setInventoryItemQuantity', { materialId: this.materialId, newQuantity });
-      },
-    },
-  },
+        this.$store.commit("setInventoryItemQuantity", {
+          materialId: this.materialId,
+          newQuantity
+        });
+      }
+    }
+  }
 });
 </script>
 

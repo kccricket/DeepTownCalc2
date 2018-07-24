@@ -6,22 +6,21 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import Inventory from './components/Inventory.vue';
-import Demands from './components/Demands.vue';
+import Vue from "vue";
+import Inventory from "./components/Inventory.vue";
+import Demands from "./components/Demands.vue";
 
 export default Vue.extend({
-  name: 'App',
+  name: "App",
   components: {
     Inventory,
-    Demands,
+    Demands
   },
   created(): void {
-    this.$store.dispatch('getInitialInventory', this.$gameData.materials);
-  },
+    this.$store.dispatch("getInitialInventory", this.$gameData.materials);
+  }
 });
 </script>
 
 <style lang="scss" scoped>
-
 </style>

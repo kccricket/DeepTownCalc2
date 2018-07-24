@@ -13,14 +13,14 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import InventoryInput from './InventoryInput.vue';
+import Vue from "vue";
+import InventoryInput from "./InventoryInput.vue";
 
 export default Vue.extend({
-  name: 'Inventory',
+  name: "Inventory",
   components: {
-    InventoryInput,
-  },
+    InventoryInput
+  }
 });
 </script>
 
@@ -31,7 +31,7 @@ ul {
   padding: 0;
 }
 li {
-  margin: 0.25em 0 ;
+  margin: 0.25em 0;
 }
 .inventory {
   display: table;

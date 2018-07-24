@@ -1,8 +1,8 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
-import InventoryItem from '@/game-types/InventoryItem';
-import DemandedItem from '@/game-types/DemandedItem';
-import Material from '@/game-types/Material';
+import Vue from "vue";
+import Vuex from "vuex";
+import InventoryItem from "@/game-types/InventoryItem";
+import DemandedItem from "@/game-types/DemandedItem";
+import Material from "@/game-types/Material";
 
 Vue.use(Vuex);
 
@@ -27,19 +27,23 @@ class InventoryStore extends Array<InventoryItem> {
 export default new Vuex.Store({
   state: {
     inventory: InventoryStore.create(),
-    demands: new Array<DemandedItem>(),
+    demands: new Array<DemandedItem>()
   },
   getters: {
-    maybeGetDemandForMaterial(state): (material: Material) => (DemandedItem | undefined) {
-      return (material): (DemandedItem | undefined) => {
-        return state.demands.find((d: DemandedItem) => d.material.name === material.name);
+    maybeGetDemandForMaterial(
+      state
+    ): (material: Material) => DemandedItem | undefined {
+      return (material): DemandedItem | undefined => {
+        return state.demands.find(
+          (d: DemandedItem) => d.material.name === material.name
+        );
       };
     },
     getInventoryItemQuantity(state): (materialId: number) => number {
       return (materialId): number => {
         return state.inventory[materialId].quantity;
       };
-    },
+    }
   },
   mutations: {
     setInventory(state, newInventory: InventoryStore): void {
@@ -47,7 +51,7 @@ export default new Vuex.Store({
     },
     setInventoryItemQuantity(state, { materialId, newQuantity }): void {
       state.inventory.setItemQuantity(materialId, newQuantity);
-    },
+    }
   },
   actions: {
     getInitialInventory({ commit }, materials: Material[]): void {
@@ -55,10 +59,10 @@ export default new Vuex.Store({
       for (const material of materials) {
         rawInventory.push({
           material,
-          quantity: 0,
+          quantity: 0
         } as InventoryItem);
       }
-      commit('setInventory', rawInventory);
-    },
-  },
+      commit("setInventory", rawInventory);
+    }
+  }
 });

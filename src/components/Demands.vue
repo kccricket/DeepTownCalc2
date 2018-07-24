@@ -6,20 +6,16 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import DemandInput from './DemandInput.vue';
+import { Component, Vue } from "vue-property-decorator";
+import DemandInput from "./DemandInput.vue";
 
 @Component({
   components: {
-    DemandInput,
-  },
+    DemandInput
+  }
 })
-export default class Demands extends Vue {
-
-}
+export default class Demands extends Vue {}
 </script>
 
 <style lang="scss" scoped>
-
 </style>
-
