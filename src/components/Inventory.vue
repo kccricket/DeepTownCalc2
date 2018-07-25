@@ -6,18 +6,18 @@
         :key="material.name">
         <inventory-input
           :material-id="i"
-          :material="material"></inventory-input>
+          :material="material"/>
       </li>
     </ul>
   </div>
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import InventoryInput from './InventoryInput.vue';
+import Vue from "vue";
+import InventoryInput from "./InventoryInput.vue";
 
 export default Vue.extend({
-  name: 'Inventory',
+  name: "Inventory",
   components: {
     InventoryInput
   }

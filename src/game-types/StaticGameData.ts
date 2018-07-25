@@ -1,6 +1,10 @@
-import Material from '@/game-types/Material';
+import Material from "@/game-types/Material";
+import MaterialName from "@/game-types/MaterialName";
+import MaterialSource from "@/game-types/MaterialSource";
 
 export interface StaticGameData {
-  materials: Material[];
-  mines: object[];
+  readonly materials: Material[];
+  readonly mines: object[];
+  readonly getMaterialByName: (name: MaterialName) => Material | undefined;
+  readonly getMaterialsBySource: (source: MaterialSource) => Material[];
 }

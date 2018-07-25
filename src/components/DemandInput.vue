@@ -6,8 +6,8 @@
       value-key="name">
       <el-option
         v-for="material in $gameData.materials"
-        :key="material.name"
         :label="material.name"
+        :key="material.name"
         :value="material"/>
     </el-select>
     <el-input-number
@@ -17,11 +17,11 @@
 
 <script lang="ts">
 export default {
-  name: 'DemandInput',
+  name: "DemandInput",
   data() {
     return {
       numb: 0,
-      selc: ''
+      selc: ""
     };
   }
 };

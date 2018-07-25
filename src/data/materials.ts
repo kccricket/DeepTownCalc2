@@ -1,934 +1,937 @@
+import MaterialName from "@/game-types/MaterialName";
+import MaterialSource from "@/game-types/MaterialSource";
+
 export default [
   {
-    name: 'coal',
-    source: 'mining'
+    name: MaterialName.Coal,
+    source: MaterialSource.Mining
   },
   {
-    name: 'copper',
-    source: 'mining'
+    name: "copper",
+    source: "mining"
   },
   {
-    name: 'amber',
-    source: 'mining'
+    name: "amber",
+    source: "mining"
   },
   {
-    name: 'iron',
-    source: 'mining'
+    name: "iron",
+    source: "mining"
   },
   {
-    name: 'aluminum',
-    source: 'mining'
+    name: "aluminum",
+    source: "mining"
   },
   {
-    name: 'silver',
-    source: 'mining'
+    name: "silver",
+    source: "mining"
   },
   {
-    name: 'gold',
-    source: 'mining'
+    name: "gold",
+    source: "mining"
   },
   {
-    name: 'emerald',
-    source: 'mining'
+    name: "emerald",
+    source: "mining"
   },
   {
-    name: 'platinum',
-    source: 'mining'
+    name: "platinum",
+    source: "mining"
   },
   {
-    name: 'topaz',
-    source: 'mining'
+    name: "topaz",
+    source: "mining"
   },
   {
-    name: 'ruby',
-    source: 'mining'
+    name: "ruby",
+    source: "mining"
   },
   {
-    name: 'diamond',
-    source: 'mining'
+    name: "diamond",
+    source: "mining"
   },
   {
-    name: 'sapphire',
-    source: 'mining'
+    name: "sapphire",
+    source: "mining"
   },
   {
-    name: 'amethyst',
-    source: 'mining'
+    name: "amethyst",
+    source: "mining"
   },
   {
-    name: 'titaniumOre',
-    source: 'mining'
+    name: "titaniumOre",
+    source: "mining"
   },
   {
-    name: 'alexandrite',
-    source: 'mining'
+    name: "alexandrite",
+    source: "mining"
   },
   {
-    name: 'uranium',
-    source: 'mining'
+    name: "uranium",
+    source: "mining"
   },
   {
-    name: 'obsidian',
-    source: 'mining'
+    name: "obsidian",
+    source: "mining"
   },
   {
-    name: 'uraniumRod',
-    source: 'enrichment',
-    time: '600',
-    toMake: [
+    name: "uraniumRod",
+    source: "enrichment",
+    time: 600,
+    components: [
       {
-        thing: 'uranium',
-        quantity: '100'
+        material: "uranium",
+        quantity: 100
       },
       {
-        thing: 'sodium',
-        quantity: '50'
+        material: "sodium",
+        quantity: 50
       }
     ]
   },
   {
-    name: 'polishedAlexandrite',
-    source: 'jewelCrafting',
-    time: '60',
-    toMake: [
+    name: "polishedAlexandrite",
+    source: "jewelCrafting",
+    time: 60,
+    components: [
       {
-        thing: 'alexandrite',
-        quantity: '5'
+        material: "alexandrite",
+        quantity: 5
       }
     ]
   },
   {
-    name: 'titanium',
-    source: 'chemistry',
-    time: '20',
-    batch: '50',
-    toMake: [
+    name: "titanium",
+    source: "chemistry",
+    time: 20,
+    batch: 50,
+    components: [
       {
-        thing: 'sulfuricAcid',
-        quantity: '1'
+        material: "sulfuricAcid",
+        quantity: 1
       },
       {
-        thing: 'titaniumOre',
-        quantity: '100'
+        material: "titaniumOre",
+        quantity: 100
       }
     ]
   },
   {
-    name: 'diethylEther',
-    source: 'chemistry',
-    time: '60',
-    toMake: [
+    name: "diethylEther",
+    source: "chemistry",
+    time: 60,
+    components: [
       {
-        thing: 'sulfuricAcid',
-        quantity: '1'
+        material: "sulfuricAcid",
+        quantity: 1
       },
       {
-        thing: 'ethanol',
-        quantity: '1'
+        material: "ethanol",
+        quantity: 1
       }
     ]
   },
   {
-    name: 'gunpowder',
-    source: 'chemistry',
-    time: '120',
-    batch: '20',
-    toMake: [
+    name: "gunpowder",
+    source: "chemistry",
+    time: 120,
+    batch: 20,
+    components: [
       {
-        thing: 'diethylEther',
-        quantity: '1'
+        material: "diethylEther",
+        quantity: 1
       },
       {
-        thing: 'sulfuricAcid',
-        quantity: '2'
+        material: "sulfuricAcid",
+        quantity: 2
       },
       {
-        thing: 'tree',
-        quantity: '2'
+        material: "tree",
+        quantity: 2
       }
     ]
   },
   {
-    name: 'gear',
-    source: 'crafting',
-    time: '80',
-    toMake: [
+    name: "gear",
+    source: "crafting",
+    time: 80,
+    components: [
       {
-        thing: 'diamondCutter',
-        quantity: '1'
+        material: "diamondCutter",
+        quantity: 1
       },
       {
-        thing: 'titaniumBar',
-        quantity: '1'
+        material: "titaniumBar",
+        quantity: 1
       }
     ]
   },
   {
-    name: 'bomb',
-    source: 'crafting',
-    time: '120',
-    toMake: [
+    name: "bomb",
+    source: "crafting",
+    time: 120,
+    components: [
       {
-        thing: 'titaniumBar',
-        quantity: '5'
+        material: "titaniumBar",
+        quantity: 5
       },
       {
-        thing: 'gunpowder',
-        quantity: '10'
+        material: "gunpowder",
+        quantity: 10
       }
     ]
   },
   {
-    name: 'titaniumBar',
-    source: 'smelting',
-    time: '60',
-    toMake: [
+    name: "titaniumBar",
+    source: "smelting",
+    time: 60,
+    components: [
       {
-        thing: 'titanium',
-        quantity: '5'
+        material: "titanium",
+        quantity: 5
       }
     ]
   },
   {
-    name: 'copperBar',
-    source: 'smelting',
-    time: '10',
-    toMake: [
+    name: "copperBar",
+    source: "smelting",
+    time: 10,
+    components: [
       {
-        thing: 'copper',
-        quantity: '5'
+        material: "copper",
+        quantity: 5
       }
     ]
   },
   {
-    name: 'ironBar',
-    source: 'smelting',
-    time: '15',
-    toMake: [
+    name: "ironBar",
+    source: "smelting",
+    time: 15,
+    components: [
       {
-        thing: 'iron',
-        quantity: '5'
+        material: "iron",
+        quantity: 5
       }
     ]
   },
   {
-    name: 'glass',
-    source: 'smelting',
-    time: '60',
-    toMake: [
+    name: "glass",
+    source: "smelting",
+    time: 60,
+    components: [
       {
-        thing: 'silicon',
-        quantity: '2'
+        material: "silicon",
+        quantity: 2
       }
     ]
   },
   {
-    name: 'aluminumBar',
-    source: 'smelting',
-    time: '15',
-    toMake: [
+    name: "aluminumBar",
+    source: "smelting",
+    time: 15,
+    components: [
       {
-        thing: 'aluminum',
-        quantity: '5'
+        material: "aluminum",
+        quantity: 5
       }
     ]
   },
   {
-    name: 'steelBar',
-    source: 'smelting',
-    time: '45',
-    toMake: [
+    name: "steelBar",
+    source: "smelting",
+    time: 45,
+    components: [
       {
-        thing: 'ironBar',
-        quantity: '1'
+        material: "ironBar",
+        quantity: 1
       },
       {
-        thing: 'graphite',
-        quantity: '1'
+        material: "graphite",
+        quantity: 1
       }
     ]
   },
   {
-    name: 'silverBar',
-    source: 'smelting',
-    time: '60',
-    toMake: [
+    name: "silverBar",
+    source: "smelting",
+    time: 60,
+    components: [
       {
-        thing: 'silver',
-        quantity: '5'
+        material: "silver",
+        quantity: 5
       }
     ]
   },
   {
-    name: 'charcoal',
-    source: 'smelting',
-    time: '60',
-    batch: '50',
-    toMake: [
+    name: "charcoal",
+    source: "smelting",
+    time: 60,
+    batch: 50,
+    components: [
       {
-        thing: 'tree',
-        quantity: '1'
+        material: "tree",
+        quantity: 1
       }
     ]
   },
   {
-    name: 'goldBar',
-    source: 'smelting',
-    time: '60',
-    toMake: [
+    name: "goldBar",
+    source: "smelting",
+    time: 60,
+    components: [
       {
-        thing: 'gold',
-        quantity: '5'
+        material: "gold",
+        quantity: 5
       }
     ]
   },
   {
-    name: 'steelPlate',
-    source: 'smelting',
-    time: '120',
-    toMake: [
+    name: "steelPlate",
+    source: "smelting",
+    time: 120,
+    components: [
       {
-        thing: 'steelBar',
-        quantity: '5'
+        material: "steelBar",
+        quantity: 5
       }
     ]
   },
   {
-    name: 'graphite',
-    source: 'crafting',
-    time: '5',
-    value: '15',
-    toMake: [
+    name: "graphite",
+    source: "crafting",
+    time: 5,
+    value: 15,
+    components: [
       {
-        thing: 'coal',
-        quantity: '5'
+        material: "coal",
+        quantity: 5
       }
     ]
   },
   {
-    name: 'copperNail',
-    source: 'crafting',
-    time: '20',
-    batch: '10',
-    value: '10',
-    toMake: [
+    name: "copperNail",
+    source: "crafting",
+    time: 20,
+    batch: 10,
+    value: 10,
+    components: [
       {
-        thing: 'copperBar',
-        quantity: '1'
+        material: "copperBar",
+        quantity: 1
       }
     ]
   },
   {
-    name: 'wire',
-    source: 'crafting',
-    time: '30',
-    batch: '5',
-    value: '15',
-    toMake: [
+    name: "wire",
+    source: "crafting",
+    time: 30,
+    batch: 5,
+    value: 15,
+    components: [
       {
-        thing: 'copperBar',
-        quantity: '1'
+        material: "copperBar",
+        quantity: 1
       }
     ]
   },
   {
-    name: 'battery',
-    source: 'crafting',
-    time: '120',
-    value: '200',
-    toMake: [
+    name: "battery",
+    source: "crafting",
+    time: 120,
+    value: 200,
+    components: [
       {
-        thing: 'amber',
-        quantity: '1'
+        material: "amber",
+        quantity: 1
       },
       {
-        thing: 'ironBar',
-        quantity: '1'
+        material: "ironBar",
+        quantity: 1
       },
       {
-        thing: 'copperBar',
-        quantity: '5'
+        material: "copperBar",
+        quantity: 5
       }
     ]
   },
   {
-    name: 'circuit',
-    source: 'crafting',
-    time: '180',
-    value: '2070',
-    toMake: [
+    name: "circuit",
+    source: "crafting",
+    time: 180,
+    value: 2070,
+    components: [
       {
-        thing: 'ironBar',
-        quantity: '10'
+        material: "ironBar",
+        quantity: 10
       },
       {
-        thing: 'graphite',
-        quantity: '50'
+        material: "graphite",
+        quantity: 50
       },
       {
-        thing: 'copperBar',
-        quantity: '20'
+        material: "copperBar",
+        quantity: 20
       }
     ]
   },
   {
-    name: 'lamp',
-    source: 'crafting',
-    time: '80',
-    value: '760',
-    toMake: [
+    name: "lamp",
+    source: "crafting",
+    time: 80,
+    value: 760,
+    components: [
       {
-        thing: 'wire',
-        quantity: '10'
+        material: "wire",
+        quantity: 10
       },
       {
-        thing: 'graphite',
-        quantity: '20'
+        material: "graphite",
+        quantity: 20
       },
       {
-        thing: 'copperBar',
-        quantity: '5'
+        material: "copperBar",
+        quantity: 5
       }
     ]
   },
   {
-    name: 'flask',
-    source: 'crafting',
-    time: '60',
-    value: '800',
-    toMake: [
+    name: "flask",
+    source: "crafting",
+    time: 60,
+    value: 800,
+    components: [
       {
-        thing: 'glass',
-        quantity: '1'
+        material: "glass",
+        quantity: 1
       }
     ]
   },
   {
-    name: 'amberCharger',
-    source: 'crafting',
-    time: '5',
-    value: '4',
-    toMake: [
+    name: "amberCharger",
+    source: "crafting",
+    time: 5,
+    value: 4,
+    components: [
       {
-        thing: 'amber',
-        quantity: '1'
+        material: "amber",
+        quantity: 1
       }
     ]
   },
   {
-    name: 'aluminumBottle',
-    source: 'crafting',
-    time: '30',
-    value: '55',
-    toMake: [
+    name: "aluminumBottle",
+    source: "crafting",
+    time: 30,
+    value: 55,
+    components: [
       {
-        thing: 'aluminumBar',
-        quantity: '1'
+        material: "aluminumBar",
+        quantity: 1
       }
     ]
   },
   {
-    name: 'amberInsulation',
-    source: 'crafting',
-    time: '20',
-    value: '125',
-    toMake: [
+    name: "amberInsulation",
+    source: "crafting",
+    time: 20,
+    value: 125,
+    components: [
       {
-        thing: 'amber',
-        quantity: '10'
+        material: "amber",
+        quantity: 10
       },
       {
-        thing: 'aluminumBottle',
-        quantity: '1'
+        material: "aluminumBottle",
+        quantity: 1
       }
     ]
   },
   {
-    name: 'insulatedWire',
-    source: 'crafting',
-    time: '200',
-    value: '750',
-    toMake: [
+    name: "insulatedWire",
+    source: "crafting",
+    time: 200,
+    value: 750,
+    components: [
       {
-        thing: 'wire',
-        quantity: '1'
+        material: "wire",
+        quantity: 1
       },
       {
-        thing: 'amberInsulation',
-        quantity: '1'
+        material: "amberInsulation",
+        quantity: 1
       }
     ]
   },
   {
-    name: 'greenLaser',
-    source: 'crafting',
-    time: '20',
-    batch: '5',
-    value: '400',
-    toMake: [
+    name: "greenLaser",
+    source: "crafting",
+    time: 20,
+    batch: 5,
+    value: 400,
+    components: [
       {
-        thing: 'polishedEmerald',
-        quantity: '1'
+        material: "polishedEmerald",
+        quantity: 1
       },
       {
-        thing: 'insulatedWire',
-        quantity: '1'
+        material: "insulatedWire",
+        quantity: 1
       },
       {
-        thing: 'lamp',
-        quantity: '1'
+        material: "lamp",
+        quantity: 1
       }
     ]
   },
   {
-    name: 'diamondCutter',
-    source: 'crafting',
-    time: '30',
-    value: '5000',
-    toMake: [
+    name: "diamondCutter",
+    source: "crafting",
+    time: 30,
+    value: 5000,
+    components: [
       {
-        thing: 'steelPlate',
-        quantity: '1'
+        material: "steelPlate",
+        quantity: 1
       },
       {
-        thing: 'polishedDiamond',
-        quantity: '5'
+        material: "polishedDiamond",
+        quantity: 5
       }
     ]
   },
   {
-    name: 'motherboard',
-    source: 'crafting',
-    time: '1800',
-    value: '17000',
-    toMake: [
+    name: "motherboard",
+    source: "crafting",
+    time: 1800,
+    value: 17000,
+    components: [
       {
-        thing: 'silicon',
-        quantity: '3'
+        material: "silicon",
+        quantity: 3
       },
       {
-        thing: 'circuit',
-        quantity: '3'
+        material: "circuit",
+        quantity: 3
       },
       {
-        thing: 'goldBar',
-        quantity: '1'
+        material: "goldBar",
+        quantity: 1
       }
     ]
   },
   {
-    name: 'solidPropellant',
-    source: 'crafting',
-    time: '1200',
-    value: '27000',
-    toMake: [
+    name: "solidPropellant",
+    source: "crafting",
+    time: 1200,
+    value: 27000,
+    components: [
       {
-        thing: 'rubber',
-        quantity: '3'
+        material: "rubber",
+        quantity: 3
       },
       {
-        thing: 'aluminumBar',
-        quantity: '10'
+        material: "aluminumBar",
+        quantity: 10
       }
     ]
   },
   {
-    name: 'accumulator',
-    source: 'crafting',
-    time: '180',
-    value: '9000',
-    toMake: [
+    name: "accumulator",
+    source: "crafting",
+    time: 180,
+    value: 9000,
+    components: [
       {
-        thing: 'sodium',
-        quantity: '20'
+        material: "sodium",
+        quantity: 20
       },
       {
-        thing: 'sulfur',
-        quantity: '20'
+        material: "sulfur",
+        quantity: 20
       }
     ]
   },
   {
-    name: 'solarPanel',
-    source: 'crafting',
-    time: '60',
-    value: '69000',
-    toMake: [
+    name: "solarPanel",
+    source: "crafting",
+    time: 60,
+    value: 69000,
+    components: [
       {
-        thing: 'rubber',
-        quantity: '1'
+        material: "rubber",
+        quantity: 1
       },
       {
-        thing: 'silicon',
-        quantity: '10'
+        material: "silicon",
+        quantity: 10
       },
       {
-        thing: 'glass',
-        quantity: '50'
+        material: "glass",
+        quantity: 50
       }
     ]
   },
   {
-    name: 'silicon',
-    source: 'chemicalMining',
-    time: '600',
-    batch: '5',
-    value: '100'
+    name: "silicon",
+    source: "chemicalMining",
+    time: 600,
+    batch: 5,
+    value: 100
   },
   {
-    name: 'sulfur',
-    source: 'chemicalMining',
-    time: '600',
-    batch: '5',
-    value: '100'
+    name: "sulfur",
+    source: "chemicalMining",
+    time: 600,
+    batch: 5,
+    value: 100
   },
   {
-    name: 'sodium',
-    source: 'chemicalMining',
-    time: '600',
-    batch: '5',
-    value: '100'
+    name: "sodium",
+    source: "chemicalMining",
+    time: 600,
+    batch: 5,
+    value: 100
   },
   {
-    name: 'oil',
-    source: 'oilPumping',
-    value: '21'
+    name: "oil",
+    source: "oilPumping",
+    value: 21
   },
   {
-    name: 'water',
-    source: 'waterCollection',
-    value: '5'
+    name: "water",
+    source: "waterCollection",
+    value: 5
   },
   {
-    name: 'tree',
-    source: 'greenhouse',
-    time: '1800',
-    batch: '10',
-    value: '193',
-    toMake: [
+    name: "tree",
+    source: "greenhouse",
+    time: 1800,
+    batch: 10,
+    value: 193,
+    components: [
       {
-        thing: 'treeSeed',
-        quantity: '1'
+        material: "treeSeed",
+        quantity: 1
       },
       {
-        thing: 'water',
-        quantity: '10'
+        material: "water",
+        quantity: 10
       }
     ]
   },
   {
-    name: 'liana',
-    source: 'greenhouse',
-    time: '1800',
-    toMake: [
+    name: "liana",
+    source: "greenhouse",
+    time: 1800,
+    components: [
       {
-        thing: 'lianaSeed',
-        quantity: '1'
+        material: "lianaSeed",
+        quantity: 1
       },
       {
-        thing: 'water',
-        quantity: '20'
+        material: "water",
+        quantity: 20
       }
     ]
   },
   {
-    name: 'grape',
-    source: 'greenhouse',
-    time: '1800',
-    batch: '2',
-    toMake: [
+    name: "grape",
+    source: "greenhouse",
+    time: 1800,
+    batch: 2,
+    components: [
       {
-        thing: 'grapeSeed',
-        quantity: '1'
+        material: "grapeSeed",
+        quantity: 1
       },
       {
-        thing: 'water',
-        quantity: '15'
+        material: "water",
+        quantity: 15
       }
     ]
   },
   {
-    name: 'treeSeed',
-    source: 'shop',
-    value: '20'
+    name: "treeSeed",
+    source: "shop",
+    value: 20
   },
   {
-    name: 'lianaSeed',
-    source: 'shop',
-    value: '1000'
+    name: "lianaSeed",
+    source: "shop",
+    value: 1000
   },
   {
-    name: 'grapeSeed',
-    source: 'shop',
-    value: '1200'
+    name: "grapeSeed",
+    source: "shop",
+    value: 1200
   },
   {
-    name: 'cleanWater',
-    source: 'chemistry',
-    time: '600',
-    value: '1200',
-    toMake: [
+    name: "cleanWater",
+    source: "chemistry",
+    time: 600,
+    value: 1200,
+    components: [
       {
-        thing: 'water',
-        quantity: '1'
+        material: "water",
+        quantity: 1
       },
       {
-        thing: 'flask',
-        quantity: '1'
+        material: "flask",
+        quantity: 1
       }
     ]
   },
   {
-    name: 'rubber',
-    source: 'chemistry',
-    time: '1800',
-    value: '4000',
-    batch: '2',
-    toMake: [
+    name: "rubber",
+    source: "chemistry",
+    time: 1800,
+    value: 4000,
+    batch: 2,
+    components: [
       {
-        thing: 'liana',
-        quantity: '1'
+        material: "liana",
+        quantity: 1
       }
     ]
   },
   {
-    name: 'sulfuricAcid',
-    source: 'chemistry',
-    time: '1800',
-    value: '3500',
-    toMake: [
+    name: "sulfuricAcid",
+    source: "chemistry",
+    time: 1800,
+    value: 3500,
+    components: [
       {
-        thing: 'cleanWater',
-        quantity: '1'
+        material: "cleanWater",
+        quantity: 1
       },
       {
-        thing: 'sulfur',
-        quantity: '2'
+        material: "sulfur",
+        quantity: 2
       }
     ]
   },
   {
-    name: 'ethanol',
-    source: 'chemistry',
-    time: '1800',
-    value: '4200',
-    toMake: [
+    name: "ethanol",
+    source: "chemistry",
+    time: 1800,
+    value: 4200,
+    components: [
       {
-        thing: 'aluminumBottle',
-        quantity: '1'
+        material: "aluminumBottle",
+        quantity: 1
       },
       {
-        thing: 'grape',
-        quantity: '2'
+        material: "grape",
+        quantity: 2
       }
     ]
   },
   {
-    name: 'refinedOil',
-    source: 'chemistry',
-    time: '1800',
-    value: '16500',
-    toMake: [
+    name: "refinedOil",
+    source: "chemistry",
+    time: 1800,
+    value: 16500,
+    components: [
       {
-        thing: 'flask',
-        quantity: '1'
+        material: "flask",
+        quantity: 1
       },
       {
-        thing: 'hydrogen',
-        quantity: '10'
+        material: "hydrogen",
+        quantity: 10
       },
       {
-        thing: 'oil',
-        quantity: '10'
+        material: "oil",
+        quantity: 10
       }
     ]
   },
   {
-    name: 'plastic',
-    source: 'chemistry',
-    time: '600',
-    value: '40000',
-    toMake: [
+    name: "plastic",
+    source: "chemistry",
+    time: 600,
+    value: 40000,
+    components: [
       {
-        thing: 'refinedOil',
-        quantity: '1'
+        material: "refinedOil",
+        quantity: 1
       },
       {
-        thing: 'coal',
-        quantity: '50'
+        material: "coal",
+        quantity: 50
       },
       {
-        thing: 'greenLaser',
-        quantity: '1'
+        material: "greenLaser",
+        quantity: 1
       }
     ]
   },
   {
-    name: 'hydrogen',
-    source: 'chemistry',
-    time: '900',
-    value: '400',
-    batch: '2',
-    byproduct: 'oxygen',
-    toMake: [
+    name: "hydrogen",
+    source: "chemistry",
+    time: 900,
+    value: 400,
+    batch: 2,
+    byproduct: "oxygen",
+    components: [
       {
-        thing: 'cleanWater',
-        quantity: '1'
+        material: "cleanWater",
+        quantity: 1
       }
     ]
   },
   {
-    name: 'oxygen',
-    source: 'hydrogen',
-    value: '800'
+    name: "oxygen",
+    source: "hydrogen",
+    value: 800
   },
   {
-    name: 'polishedAmber',
-    source: 'jewelCrafting',
-    time: '30',
-    value: '70',
-    toMake: [
+    name: "polishedAmber",
+    source: "jewelCrafting",
+    time: 30,
+    value: 70,
+    components: [
       {
-        thing: 'amber',
-        quantity: '5'
+        material: "amber",
+        quantity: 5
       }
     ]
   },
   {
-    name: 'polishedEmerald',
-    source: 'jewelCrafting',
-    time: '30',
-    value: '160',
-    toMake: [
+    name: "polishedEmerald",
+    source: "jewelCrafting",
+    time: 30,
+    value: 160,
+    components: [
       {
-        thing: 'emerald',
-        quantity: '5'
+        material: "emerald",
+        quantity: 5
       }
     ]
   },
   {
-    name: 'amberBracelet',
-    source: 'jewelCrafting',
-    time: '120',
-    value: '280',
-    toMake: [
+    name: "amberBracelet",
+    source: "jewelCrafting",
+    time: 120,
+    value: 280,
+    components: [
       {
-        thing: 'polishedAmber',
-        quantity: '1'
+        material: "polishedAmber",
+        quantity: 1
       },
       {
-        thing: 'silverBar',
-        quantity: '1'
+        material: "silverBar",
+        quantity: 1
       }
     ]
   },
   {
-    name: 'emeraldRing',
-    source: 'jewelCrafting',
-    time: '300',
-    value: '450',
-    toMake: [
+    name: "emeraldRing",
+    source: "jewelCrafting",
+    time: 300,
+    value: 450,
+    components: [
       {
-        thing: 'polishedEmerald',
-        quantity: '1'
+        material: "polishedEmerald",
+        quantity: 1
       },
       {
-        thing: 'goldBar',
-        quantity: '1'
+        material: "goldBar",
+        quantity: 1
       }
     ]
   },
   {
-    name: 'polishedTopaz',
-    source: 'jewelCrafting',
-    time: '60',
-    value: '70',
-    toMake: [
+    name: "polishedTopaz",
+    source: "jewelCrafting",
+    time: 60,
+    value: 70,
+    components: [
       {
-        thing: 'topaz',
-        quantity: '5'
+        material: "topaz",
+        quantity: 5
       }
     ]
   },
   {
-    name: 'polishedRuby',
-    source: 'jewelCrafting',
-    time: '60',
-    value: '75',
-    toMake: [
+    name: "polishedRuby",
+    source: "jewelCrafting",
+    time: 60,
+    value: 75,
+    components: [
       {
-        thing: 'ruby',
-        quantity: '5'
+        material: "ruby",
+        quantity: 5
       }
     ]
   },
   {
-    name: 'polishedDiamond',
-    source: 'jewelCrafting',
-    time: '60',
-    value: '90',
-    toMake: [
+    name: "polishedDiamond",
+    source: "jewelCrafting",
+    time: 60,
+    value: 90,
+    components: [
       {
-        thing: 'diamond',
-        quantity: '5'
+        material: "diamond",
+        quantity: 5
       }
     ]
   },
   {
-    name: 'polishedSapphire',
-    source: 'jewelCrafting',
-    time: '60',
-    value: '80',
-    toMake: [
+    name: "polishedSapphire",
+    source: "jewelCrafting",
+    time: 60,
+    value: 80,
+    components: [
       {
-        thing: 'sapphire',
-        quantity: '5'
+        material: "sapphire",
+        quantity: 5
       }
     ]
   },
   {
-    name: 'polishedAmethyst',
-    source: 'jewelCrafting',
-    time: '60',
-    value: '90',
-    toMake: [
+    name: "polishedAmethyst",
+    source: "jewelCrafting",
+    time: 60,
+    value: 90,
+    components: [
       {
-        thing: 'amethyst',
-        quantity: '5'
+        material: "amethyst",
+        quantity: 5
       }
     ]
   },
   {
-    name: 'mayaCalendar',
-    source: 'jewelCrafting',
-    time: '120',
-    toMake: [
+    name: "mayaCalendar",
+    source: "jewelCrafting",
+    time: 120,
+    components: [
       {
-        thing: 'goldBar',
-        quantity: '10'
+        material: "goldBar",
+        quantity: 10
       },
       {
-        thing: 'silverBar',
-        quantity: '2'
+        material: "silverBar",
+        quantity: 2
       }
     ]
   },
   {
-    name: 'hairComb',
-    source: 'jewelCrafting',
-    time: '120',
-    toMake: [
+    name: "hairComb",
+    source: "jewelCrafting",
+    time: 120,
+    components: [
       {
-        thing: 'silverBar',
-        quantity: '1'
+        material: "silverBar",
+        quantity: 1
       },
       {
-        thing: 'polishedAmethyst',
-        quantity: '15'
+        material: "polishedAmethyst",
+        quantity: 15
       },
       {
-        thing: 'polishedAlexandrite',
-        quantity: '10'
+        material: "polishedAlexandrite",
+        quantity: 10
       }
     ]
   }
