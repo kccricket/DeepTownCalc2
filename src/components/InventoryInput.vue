@@ -20,8 +20,10 @@ import { mapState } from "vuex";
 export default Vue.extend({
   name: "InventoryInput",
   props: {
-    materialId: Number,
-    material: Object as () => Material
+    material: {
+      type: Object as () => Material,
+      required: true
+    }
   },
   computed: {
     isMaterialDemanded(): (material: Material) => boolean {
@@ -39,11 +41,11 @@ export default Vue.extend({
     },
     materialQuantity: {
       get(): number {
-        return this.$store.getters.getInventoryItemQuantity(this.materialId);
+        return this.$store.getters.getInventoryItemQuantity(this.material.name);
       },
       set(newQuantity: number): void {
         this.$store.commit("setInventoryItemQuantity", {
-          materialId: this.materialId,
+          materialName: this.material.name,
           newQuantity
         });
       }

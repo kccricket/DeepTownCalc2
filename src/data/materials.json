@@ -769,7 +769,12 @@
     "time": 900,
     "value": 400,
     "yield": 2,
-    "byproduct": "oxygen",
+    "byproducts": [
+      {
+        "material": "oxygen",
+        "quantity": 1
+      }
+    ],
     "components": [
       {
         "material": "cleanWater",

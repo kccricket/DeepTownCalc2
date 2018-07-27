@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "element-ui": "^2.4.4",
+    "immutable": "^4.0.0-rc.9",
     "vue": "^2.5.16",
     "vuex": "^3.0.1",
     "vuex-persistedstate": "^2.5.4"

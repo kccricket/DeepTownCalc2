@@ -1,13 +1,14 @@
-import MaterialName from "@/game-types/MaterialName";
 import MaterialSource from "@/game-types/MaterialSource";
 import MaterialComponent from "@/game-types/MaterialComponent";
 
-export default interface Material {
-  readonly name: MaterialName;
-  source: MaterialSource;
-  time?: number;
-  components?: MaterialComponent[];
-  batch?: number;
-  byproducts?: Material[];
-  value?: number;
+interface Material {
+  readonly name: string;
+  readonly source: MaterialSource;
+  readonly time?: number;
+  readonly components?: MaterialComponent[];
+  readonly yield?: number;
+  readonly byproducts?: MaterialComponent[];
+  readonly value?: number;
 }
+
+export default Material;

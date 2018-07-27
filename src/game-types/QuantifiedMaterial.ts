@@ -1,6 +1,6 @@
-import Material from "@/game-types/Material";
-
-export default interface QuantifiedMaterial {
-  material: Material;
+interface QuantifiedMaterial {
+  material: string;
   quantity: number;
 }
+
+export default QuantifiedMaterial;

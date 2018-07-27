@@ -1,7 +1,8 @@
 import QuantifiedMaterial from "@/game-types/QuantifiedMaterial";
-import MaterialName from "@/game-types/MaterialName";
 
-export default interface MaterialComponent {
-  readonly name: MaterialName;
+interface MaterialComponent extends QuantifiedMaterial {
+  readonly material: string;
   readonly quantity: number;
 }
+
+export default MaterialComponent;
