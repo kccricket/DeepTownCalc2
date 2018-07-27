@@ -27,15 +27,15 @@ class InventoryStore extends Array<InventoryItem> {
 export default new Vuex.Store({
   state: {
     inventory: InventoryStore.create(),
-    demands: new Array<DemandedItem>()
+    demands: new Array<InventoryItem>()
   },
   getters: {
     maybeGetDemandForMaterial(
       state
-    ): (material: Material) => DemandedItem | undefined {
-      return (material): DemandedItem | undefined => {
+    ): (material: Material) => InventoryItem | undefined {
+      return (material): InventoryItem | undefined => {
         return state.demands.find(
-          (d: DemandedItem) => d.material.name === material.name
+          (d: InventoryItem) => d.material.name === material.name
         );
       };
     },
