@@ -4,5 +4,13 @@ node_js:
 before_install:
   - yarn global add @vue/cli
   - yarn
-install:
+script:
   - yarn run build
+delpoy:
+  provider: pages
+  skip-cleanup: true
+  keep-history: true
+  local-dir: dist
+  on:
+    branch: master
+  committer-from-gh: true
