@@ -5,12 +5,12 @@ before_install:
   - yarn global add @vue/cli
 script:
   - yarn run build
-delpoy:
+deploy:
   provider: pages
   skip-cleanup: true
   keep-history: true
   local-dir: dist
-  on:
+  "on":
     branch: master
   committer-from-gh: true
   verbose: true
