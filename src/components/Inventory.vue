@@ -2,10 +2,9 @@
   <div>
     <ul class="inventory">
       <li
-        v-for="(material, i) in $gameData.materials"
+        v-for="material in materials"
         :key="material.name">
         <inventory-input
-          :material-id="i"
           :material="material"/>
       </li>
     </ul>
@@ -14,12 +13,18 @@
 
 <script lang="ts">
 import Vue from "vue";
-import InventoryInput from "./InventoryInput.vue";
+import InventoryInput from "@/components/InventoryInput.vue";
+import Material from "@/game-types/Material";
 
 export default Vue.extend({
   name: "Inventory",
   components: {
     InventoryInput
+  },
+  computed: {
+    materials(): Material[] {
+      return this.$gameData.materials.valueSeq().toArray();
+    }
   }
 });
 </script>

@@ -7,7 +7,7 @@
 
 <script lang="ts">
 import Vue from "vue";
-import DemandInput from "./DemandInput.vue";
+import DemandInput from "@/components/DemandInput.vue";
 
 export default Vue.extend({
   name: "Demands",

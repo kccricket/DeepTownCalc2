@@ -1,68 +1,59 @@
 import Vue from "vue";
-import Vuex from "vuex";
+import Vuex, { StoreOptions } from "vuex";
 import InventoryItem from "@/game-types/InventoryItem";
-import DemandedItem from "@/game-types/DemandedItem";
 import Material from "@/game-types/Material";
+import IDictionary from "@/game-types/IDictionary";
+import RootState from "@/game-types/RootState";
 
 Vue.use(Vuex);
 
-class InventoryStore extends Array<InventoryItem> {
-  public static create(): InventoryStore {
-    return Object.create(InventoryStore.prototype);
-  }
-
-  private constructor(items: InventoryItem[]) {
-    super(...items);
-  }
-
-  public getItemQuantity(materialId: number, newQuantity: number): number {
-    return this[materialId].quantity;
-  }
-
-  public setItemQuantity(materialId: number, newQuantity: number): void {
-    this[materialId].quantity = newQuantity;
-  }
-}
-
-export default new Vuex.Store({
+const store: StoreOptions<RootState> = {
   state: {
-    inventory: InventoryStore.create(),
+    inventory: {} as IDictionary<InventoryItem>,
     demands: new Array<InventoryItem>()
   },
   getters: {
     maybeGetDemandForMaterial(
       state
     ): (material: Material) => InventoryItem | undefined {
-      return (material): InventoryItem | undefined => {
+      return (material: Material): InventoryItem | undefined => {
         return state.demands.find(
-          (d: InventoryItem) => d.material.name === material.name
+          (d: InventoryItem): boolean => d.material.name === material.name
         );
       };
     },
-    getInventoryItemQuantity(state): (materialId: number) => number {
-      return (materialId): number => {
-        return state.inventory[materialId].quantity;
+    getInventoryItemQuantity(state): (material: Material) => number {
+      return (material: Material): number => {
+        return state.inventory[material.name]
+          ? state.inventory[material.name].quantity
+          : 0;
       };
     }
   },
   mutations: {
-    setInventory(state, newInventory: InventoryStore): void {
+    setInventory(state, newInventory: IDictionary<InventoryItem>): void {
       state.inventory = newInventory;
     },
-    setInventoryItemQuantity(state, { materialId, newQuantity }): void {
-      state.inventory.setItemQuantity(materialId, newQuantity);
+    setInventoryItemQuantity(state, params: InventoryItem): void {
+      if (state.inventory[params.material.name]) {
+        state.inventory[params.material.name].quantity = params.quantity;
+      } else {
+        state.inventory[params.material.name] = params;
+      }
     }
   },
   actions: {
-    getInitialInventory({ commit }, materials: Material[]): void {
-      const rawInventory = InventoryStore.create();
-      for (const material of materials) {
-        rawInventory.push({
-          material,
-          quantity: 0
-        } as InventoryItem);
-      }
-      commit("setInventory", rawInventory);
-    }
+    // getInitialInventory({ commit }, materials: Material[]): void {
+    //   const rawInventory = {} as IDictionary<InventoryItem>;
+    //   for (const material of materials) {
+    //     rawInventory[material.name] = {
+    //       material,
+    //       quantity: 0
+    //     } as InventoryItem;
+    //   }
+    //   commit("setInventory", rawInventory);
+    // }
   }
-});
+};
+
+export default new Vuex.Store<RootState>(store);

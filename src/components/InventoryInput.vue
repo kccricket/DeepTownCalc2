@@ -15,7 +15,7 @@
 <script lang="ts">
 import Vue from "vue";
 import Material from "@/game-types/Material";
-import { mapState } from "vuex";
+import InventoryItem from "@/game-types/InventoryItem";
 
 export default Vue.extend({
   name: "InventoryInput",
@@ -41,13 +41,13 @@ export default Vue.extend({
     },
     materialQuantity: {
       get(): number {
-        return this.$store.getters.getInventoryItemQuantity(this.material.name);
+        return this.$store.getters.getInventoryItemQuantity(this.material);
       },
-      set(newQuantity: number): void {
+      set(quantity: number): void {
         this.$store.commit("setInventoryItemQuantity", {
-          materialName: this.material.name,
-          newQuantity
-        });
+          material: this.material,
+          quantity
+        } as InventoryItem);
       }
     }
   }
