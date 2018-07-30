@@ -1,15 +1,18 @@
 <template>
-  <span>
+  <li
+    :class="{
+      'material-demanded': isMaterialDemanded,
+      'material-demand-satisfied': isDemandSatisfied
+    }"
+  >
     <label :for="'inventory-'+material.name">{{ material.name }}</label>
     <el-input-number 
-      v-model="materialQuantity"
-      :class="{
-        'material-demanded': isMaterialDemanded(material),
-        'material-demand-satisfied': isDemandSatisfied(material)
-      }"
+      v-model="materialQuantity" 
+
+      :controls="false"
       :id="'inventory-'+material.name"
-      type="number"/>
-  </span>
+      :min="0" />
+  </li>
 </template>
 
 <script lang="ts">
@@ -26,18 +29,19 @@ export default Vue.extend({
     }
   },
   computed: {
-    isMaterialDemanded(): (material: Material) => boolean {
-      return (material): boolean => {
-        return (
-          this.$store.getters.maybeGetDemandForMaterial(material) !== undefined
-        );
-      };
+    isMaterialDemanded(): boolean {
+      return (
+        this.$store.getters.maybeGetDemandForMaterial(this.material) !==
+        undefined
+      );
     },
-    isDemandSatisfied(): (material: Material) => boolean {
-      return (material): boolean => {
-        const demand = this.$store.getters.maybeGetDemandForMaterial(material);
-        return demand === undefined ? false : demand.isSatisfied;
-      };
+    isDemandSatisfied(): boolean {
+      const demand = this.$store.getters.maybeGetDemandForMaterial(
+        this.material
+      );
+      return demand === undefined
+        ? false
+        : demand.quantity <= this.materialQuantity;
     },
     materialQuantity: {
       get(): number {
@@ -54,6 +58,11 @@ export default Vue.extend({
 });
 </script>
 
-<style lang="sass" scoped>
-
+<style lang="scss" scoped>
+.material-demanded {
+  background-color: #a60;
+}
+.material-demand-satisfied {
+  background-color: #6a6;
+}
 </style>

@@ -3,15 +3,18 @@ import App from "@/App.vue";
 import store from "@/store";
 import GameDataPlugin from "@/data/game-data";
 
-import ElementUI from "element-ui";
+import { Button, InputNumber, Select, Option, OptionGroup } from "element-ui";
 import "element-ui/lib/theme-chalk/index.css";
-import locale from "element-ui/lib/locale/lang/en";
+import ElementLocale from "element-ui/lib/locale";
+import ElementLangEn from "element-ui/lib/locale/lang/en";
 
-Vue.use(ElementUI, { locale });
-Vue.component("el-input-number", ElementUI.InputNumber);
-Vue.component("el-select", ElementUI.Select);
-Vue.component("el-option", ElementUI.Option);
-Vue.component("el-optgroup", ElementUI.OptionGroup);
+ElementLocale.use(ElementLangEn);
+
+Vue.component("el-button", Button);
+Vue.component("el-input-number", InputNumber);
+Vue.component("el-select", Select);
+Vue.component("el-option", Option);
+Vue.component("el-optgroup", OptionGroup);
 
 Vue.use(GameDataPlugin);
 

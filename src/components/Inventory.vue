@@ -1,12 +1,10 @@
 <template>
   <div>
     <ul class="inventory">
-      <li
+      <inventory-input
         v-for="material in materials"
-        :key="material.name">
-        <inventory-input
-          :material="material"/>
-      </li>
+        :key="material.name"
+        :material="material"/>
     </ul>
   </div>
 </template>

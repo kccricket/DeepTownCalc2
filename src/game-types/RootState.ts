@@ -3,7 +3,7 @@ import InventoryItem from "@/game-types/InventoryItem";
 
 interface RootState {
   inventory: IDictionary<InventoryItem>;
-  demands: InventoryItem[];
+  demands: IDictionary<InventoryItem>;
 }
 
 export default RootState;

@@ -18,8 +18,10 @@ export default function GameDataPlugin(Vue: VueConstructor): void {
     minesData.map((mine): MineArea => mine as MineArea)
   );
 
-  const getMaterialsBySource = (source: MaterialSource) => {
-    return materials.filter(m => m.source === source);
+  const getMaterialsBySource = (
+    source: MaterialSource
+  ): Collection.Keyed<string, Material> => {
+    return materials.filter((m): boolean => m.source === source);
   };
 
   const staticData: StaticGameData = {
