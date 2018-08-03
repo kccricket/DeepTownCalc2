@@ -13,6 +13,8 @@
 import Vue from "vue";
 import InventoryInput from "@/components/InventoryInput.vue";
 import Material from "@/game-types/Material";
+import RootState from "@/game-types/RootState";
+import IDictionary from "@/game-types/IDictionary";
 
 export default Vue.extend({
   name: "Inventory",
@@ -20,8 +22,8 @@ export default Vue.extend({
     InventoryInput
   },
   computed: {
-    materials(): Material[] {
-      return this.$gameData.materials.valueSeq().toArray();
+    materials(): IDictionary<Material> {
+      return (this.$store.state as RootState).gameData.materials;
     }
   }
 });

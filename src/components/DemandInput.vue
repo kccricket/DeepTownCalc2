@@ -27,6 +27,8 @@
 import Vue from "vue";
 import Material from "@/game-types/Material";
 import InventoryItem from "@/game-types/InventoryItem";
+import RootState from "@/game-types/RootState";
+import IDictionary from "@/game-types/IDictionary";
 
 export default Vue.extend({
   name: "DemandInput",
@@ -39,8 +41,8 @@ export default Vue.extend({
     };
   },
   computed: {
-    materials(): Material[] {
-      return this.$gameData.materials.valueSeq().toArray();
+    materials(): IDictionary<Material> {
+      return (this.$store.state as RootState).gameData.materials;
     },
     inputIsValid(): boolean {
       if (this.newDemand.material && this.newDemand.quantity > 0) return true;

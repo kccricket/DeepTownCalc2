@@ -16,6 +16,7 @@ import DemandInput from "@/components/DemandInput.vue";
 import DemandRow from "@/components/DemandRow.vue";
 import IDictionary from "@/game-types/IDictionary";
 import InventoryItem from "@/game-types/InventoryItem";
+import RootState from "@/game-types/RootState";
 
 export default Vue.extend({
   name: "Demands",
@@ -25,7 +26,7 @@ export default Vue.extend({
   },
   computed: {
     demands(): IDictionary<InventoryItem> {
-      return this.$store.state.demands;
+      return (this.$store.state as RootState).demands;
     }
   }
 });

@@ -1,12 +1,10 @@
 import Material from "@/game-types/Material";
-import MaterialSource from "@/game-types/MaterialSource";
-import { Collection } from "../../node_modules/immutable";
 import MineArea from "@/game-types/MineArea";
+import IDictionary from "@/game-types/IDictionary";
 
-export interface StaticGameData {
-  readonly materials: Collection.Keyed<string, Material>;
-  readonly mines: Collection.Indexed<MineArea>;
-  readonly getMaterialsBySource: (
-    source: MaterialSource
-  ) => Collection.Keyed<string, Material>;
+interface GameData {
+  readonly materials: IDictionary<Material>;
+  readonly mines: MineArea[];
 }
+
+export default GameData;
