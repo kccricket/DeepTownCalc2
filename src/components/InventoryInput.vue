@@ -24,6 +24,7 @@ import MaterialHandlingMixin from "@/mixins/requiredQuantity.ts";
 
 export default Vue.extend({
   name: "InventoryInput",
+  mixins: [MaterialHandlingMixin],
   props: {
     material: {
       type: Object as () => Material,
