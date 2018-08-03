@@ -20,11 +20,9 @@ import Material from "@/game-types/Material";
 import InventoryItem from "@/game-types/InventoryItem";
 import RootState from "@/game-types/RootState";
 import IDictionary from "@/game-types/IDictionary";
-import MaterialHandlingMixin from "@/mixins/requiredQuantity.ts";
 
 export default Vue.extend({
   name: "InventoryInput",
-  mixins: [MaterialHandlingMixin],
   props: {
     material: {
       type: Object as () => Material,

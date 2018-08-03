@@ -1,7 +1,8 @@
 <template>
   <div id="app">
-    <demands/>
-    <inventory/>
+    <demands />
+    <inventory />
+    <requirements />
   </div>
 </template>
 
@@ -9,12 +10,14 @@
 import Vue from "vue";
 import Inventory from "./components/Inventory.vue";
 import Demands from "./components/Demands.vue";
+import Requirements from "./components/Requirements.vue";
 
 export default Vue.extend({
   name: "App",
   components: {
     Inventory,
-    Demands
+    Demands,
+    Requirements
   },
   created(): void {
     this.$store.dispatch("populateGameData");
