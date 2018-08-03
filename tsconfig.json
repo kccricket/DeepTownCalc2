@@ -25,7 +25,7 @@
       "scripthost"
     ],
     "resolveJsonModule": true,
-    "keyofStringsOnly": true
+    "keyofStringsOnly": true,
   },
   "include": [
     "src/**/*.ts",

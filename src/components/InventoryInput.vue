@@ -23,7 +23,6 @@ import IDictionary from "@/game-types/IDictionary";
 
 export default Vue.extend({
   name: "InventoryInput",
-  mixins: [MaterialHandlingMixin],
   props: {
     material: {
       type: Object as () => Material,

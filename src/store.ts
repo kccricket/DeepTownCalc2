@@ -6,6 +6,7 @@ import IDictionary from "@/game-types/IDictionary";
 import RootState from "@/game-types/RootState";
 import GameData from "@/game-types/StaticGameData";
 import MineArea from "@/game-types/MineArea";
+import Getters from "@/store-getters";
 
 Vue.use(Vuex);
 
@@ -69,7 +70,7 @@ const store: StoreOptions<RootState> = {
           : 0;
       };
     },
-    getAllRequirements(state): IDictionary<InventoryItem> {
+    [Getters.getAllRequirements]: function(state): IDictionary<InventoryItem> {
       const newRequirements: IDictionary<InventoryItem> = {};
       for (const materialName in state.demands) {
         const demand = state.demands[materialName];
