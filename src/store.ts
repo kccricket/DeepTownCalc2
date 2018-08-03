@@ -13,7 +13,7 @@ Vue.use(Vuex);
 function addRequirementsForDemand(
   requirementsCollection: IDictionary<InventoryItem>,
   demand: InventoryItem,
-  allMaterials: IDictionary<Material>
+  inventory: IDictionary<InventoryItem>
 ): void {
   const requiredComponents = demand.material.components;
   if (requiredComponents) {
@@ -26,16 +26,16 @@ function addRequirementsForDemand(
         : component.quantity * demand.quantity;
 
       const requirement = {
-        material: allMaterials[component.materialName],
-        quantity: totalOfMaterial
+        material: inventory[component.materialName].material,
+        quantity: Math.max(
+          0,
+          totalOfMaterial - inventory[component.materialName].quantity
+        )
       } as InventoryItem;
 
-      addRequirementsForDemand(
-        requirementsCollection,
-        requirement,
-        allMaterials
-      );
+      // if (requirement.quantity === 0) return;
 
+      addRequirementsForDemand(requirementsCollection, requirement, inventory);
       Vue.set(requirementsCollection, component.materialName, requirement);
     }
   }
@@ -74,11 +74,7 @@ const store: StoreOptions<RootState> = {
       const newRequirements: IDictionary<InventoryItem> = {};
       for (const materialName in state.demands) {
         const demand = state.demands[materialName];
-        addRequirementsForDemand(
-          newRequirements,
-          demand,
-          state.gameData.materials
-        );
+        addRequirementsForDemand(newRequirements, demand, state.inventory);
       }
       return newRequirements;
     }

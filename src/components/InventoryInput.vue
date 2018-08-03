@@ -38,12 +38,12 @@ export default Vue.extend({
         : 0;
     },
     isMaterialRequired(): boolean {
-      return this.requiredQuantity ? true : false;
+      return this.$store.getters.getAllRequirements[this.material.name]
+        ? true
+        : false;
     },
     isMaterialRequirementSatisfied(): boolean {
-      if (this.isMaterialRequired) {
-        return this.inventoryQuantity >= this.requiredQuantity;
-      } else return false;
+      return this.isMaterialRequired && this.requiredQuantity === 0;
     },
     inventoryQuantity: {
       get(): number {
