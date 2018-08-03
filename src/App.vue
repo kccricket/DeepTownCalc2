@@ -15,10 +15,11 @@ export default Vue.extend({
   components: {
     Inventory,
     Demands
-  } // ,
-  // created(): void {
-  //   this.$store.dispatch("getInitialInventory", this.$gameData.materials);
-  // }
+  },
+  created(): void {
+    this.$store.dispatch("populateGameData");
+    this.$store.dispatch("populateInitialInventory");
+  }
 });
 </script>
 

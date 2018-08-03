@@ -1,5 +1,5 @@
 interface QuantifiedMaterial {
-  material: string;
+  materialName: string;
   quantity: number;
 }
 

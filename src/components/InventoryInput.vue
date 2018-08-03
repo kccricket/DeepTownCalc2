@@ -1,14 +1,13 @@
 <template>
   <li
     :class="{
-      'material-demanded': isMaterialDemanded,
-      'material-demand-satisfied': isDemandSatisfied
+      'material-demanded': isMaterialRequired,
+      'material-demand-satisfied': isMaterialRequirementSatisfied
     }"
   >
     <label :for="'inventory-'+material.name">{{ material.name }}</label>
     <el-input-number 
-      v-model="materialQuantity" 
-
+      v-model="inventoryQuantity"
       :controls="false"
       :id="'inventory-'+material.name"
       :min="0" />
@@ -19,6 +18,9 @@
 import Vue from "vue";
 import Material from "@/game-types/Material";
 import InventoryItem from "@/game-types/InventoryItem";
+import RootState from "@/game-types/RootState";
+import IDictionary from "@/game-types/IDictionary";
+import MaterialHandlingMixin from "@/mixins/requiredQuantity.ts";
 
 export default Vue.extend({
   name: "InventoryInput",
@@ -29,23 +31,25 @@ export default Vue.extend({
     }
   },
   computed: {
-    isMaterialDemanded(): boolean {
-      return (
-        this.$store.getters.maybeGetDemandForMaterial(this.material) !==
-        undefined
-      );
+    requiredQuantity(): number {
+      const requirements: IDictionary<InventoryItem> = this.$store.getters
+        .getAllRequirements;
+      return requirements[this.material.name]
+        ? requirements[this.material.name].quantity
+        : 0;
     },
-    isDemandSatisfied(): boolean {
-      const demand = this.$store.getters.maybeGetDemandForMaterial(
-        this.material
-      );
-      return demand === undefined
-        ? false
-        : demand.quantity <= this.materialQuantity;
+    isMaterialRequired(): boolean {
+      return this.requiredQuantity ? true : false;
     },
-    materialQuantity: {
+    isMaterialRequirementSatisfied(): boolean {
+      if (this.isMaterialRequired) {
+        return this.inventoryQuantity >= this.requiredQuantity;
+      } else return false;
+    },
+    inventoryQuantity: {
       get(): number {
-        return this.$store.getters.getInventoryItemQuantity(this.material);
+        return (this.$store.state as RootState).inventory[this.material.name]
+          .quantity;
       },
       set(quantity: number): void {
         this.$store.commit("setInventoryItemQuantity", {
