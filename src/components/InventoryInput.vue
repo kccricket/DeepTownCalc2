@@ -18,47 +18,55 @@
 import Vue from "vue";
 import Material from "@/game-types/Material";
 import InventoryItem from "@/game-types/InventoryItem";
-import RootState from "@/game-types/RootState";
-import IDictionary from "@/game-types/IDictionary";
+import Component from "vue-class-component";
+import { Prop } from "vue-property-decorator";
+import { Getter, Mutation, State } from "vuex-class";
+import { StoreGetter, StoreMutation, StoreState } from "@/store";
+import { RequirementsStore, InventoryStore } from "@/game-types/RootState";
 
-export default Vue.extend({
-  name: "InventoryInput",
-  props: {
-    material: {
-      type: Object as () => Material,
-      required: true
-    }
-  },
-  computed: {
-    requiredQuantity(): number {
-      const requirements: IDictionary<InventoryItem> = this.$store.getters
-        .getAllRequirements;
-      return requirements[this.material.name]
-        ? requirements[this.material.name].quantity
-        : 0;
-    },
-    isMaterialRequired(): boolean {
-      return this.$store.getters.getAllRequirements[this.material.name]
-        ? true
-        : false;
-    },
-    isMaterialRequirementSatisfied(): boolean {
-      return this.isMaterialRequired && this.requiredQuantity === 0;
-    },
-    inventoryQuantity: {
-      get(): number {
-        return (this.$store.state as RootState).inventory[this.material.name]
-          .quantity;
-      },
-      set(quantity: number): void {
-        this.$store.commit("setInventoryItemQuantity", {
-          material: this.material,
-          quantity
-        } as InventoryItem);
-      }
-    }
+@Component
+export default class InventoryRow extends Vue {
+  @Prop({
+    type: Object as () => Material,
+    required: true
+  })
+  public material!: Material;
+
+  @Getter(StoreGetter.getAllRequirements)
+  private allRequirements!: RequirementsStore;
+
+  @Mutation(StoreMutation.setInventoryItemQuantity)
+  private setInventoryItemQuantity!: (payload: InventoryItem) => void;
+
+  @State(StoreState.inventory)
+  private inventory!: InventoryStore;
+
+  private get requiredQuantity(): number {
+    const requirements: RequirementsStore = this.allRequirements;
+    return requirements[this.material.name]
+      ? requirements[this.material.name].quantity
+      : 0;
   }
-});
+
+  private get isMaterialRequired(): boolean {
+    return this.allRequirements[this.material.name] ? true : false;
+  }
+
+  private get isMaterialRequirementSatisfied(): boolean {
+    return this.isMaterialRequired && this.requiredQuantity === 0;
+  }
+
+  private get inventoryQuantity(): number {
+    return this.inventory[this.material.name].quantity;
+  }
+
+  private set inventoryQuantity(quantity: number) {
+    this.setInventoryItemQuantity({
+      material: this.material,
+      quantity
+    } as InventoryItem);
+  }
+}
 </script>
 
 <style lang="scss" scoped>

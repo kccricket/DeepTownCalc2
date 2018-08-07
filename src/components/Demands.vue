@@ -14,22 +14,22 @@
 import Vue from "vue";
 import DemandInput from "@/components/DemandInput.vue";
 import DemandRow from "@/components/DemandRow.vue";
-import IDictionary from "@/game-types/IDictionary";
 import InventoryItem from "@/game-types/InventoryItem";
-import RootState from "@/game-types/RootState";
+import Component from "vue-class-component";
+import { State } from "vuex-class";
+import { StoreState } from "@/store";
+import { DemandsStore } from "@/game-types/RootState";
 
-export default Vue.extend({
-  name: "Demands",
+@Component({
   components: {
     DemandInput,
     DemandRow
-  },
-  computed: {
-    demands(): IDictionary<InventoryItem> {
-      return (this.$store.state as RootState).demands;
-    }
   }
-});
+})
+export default class Demands extends Vue {
+  @State(StoreState.demands)
+  private demands!: DemandsStore;
+}
 </script>
 
 <style lang="scss" scoped>

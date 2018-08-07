@@ -2,7 +2,7 @@
   <div>
     <ul class="inventory">
       <inventory-input
-        v-for="material in materials"
+        v-for="material in gameData.materials"
         :key="material.name"
         :material="material"/>
     </ul>
@@ -13,20 +13,20 @@
 import Vue from "vue";
 import InventoryInput from "@/components/InventoryInput.vue";
 import Material from "@/game-types/Material";
-import RootState from "@/game-types/RootState";
-import IDictionary from "@/game-types/IDictionary";
+import Component from "vue-class-component";
+import { State } from "vuex-class";
+import { StoreState } from "@/store";
+import { GameDataStore } from "@/game-types/RootState";
 
-export default Vue.extend({
-  name: "Inventory",
+@Component({
   components: {
     InventoryInput
-  },
-  computed: {
-    materials(): IDictionary<Material> {
-      return (this.$store.state as RootState).gameData.materials;
-    }
   }
-});
+})
+export default class Inventory extends Vue {
+  @State(StoreState.gameData)
+  private gameData!: GameDataStore;
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

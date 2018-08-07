@@ -4,8 +4,7 @@
 
 <script lang="ts">
 import Vue from "vue";
-import Component, { mixins } from "vue-class-component";
-import MaterialHandlerMixin from "@/mixins/MaterialHandlerMixin";
+import Component from "vue-class-component";
 import { Prop } from "vue-property-decorator";
 import InventoryItem from "@/game-types/InventoryItem";
 

@@ -2,18 +2,22 @@ import Vue from "vue";
 import Vuex, { StoreOptions } from "vuex";
 import InventoryItem from "@/game-types/InventoryItem";
 import Material from "@/game-types/Material";
-import IDictionary from "@/game-types/IDictionary";
-import RootState from "@/game-types/RootState";
-import GameData from "@/game-types/StaticGameData";
+import {
+  RootState,
+  InventoryStore,
+  DemandsStore,
+  GameDataStore,
+  RequirementsStore
+} from "@/game-types/RootState";
 import MineArea from "@/game-types/MineArea";
-import Getters from "@/store-getters";
+import { Dictionary } from "lodash";
 
 Vue.use(Vuex);
 
 function addRequirementsForDemand(
-  requirementsCollection: IDictionary<InventoryItem>,
+  requirementsCollection: RequirementsStore,
   demand: InventoryItem,
-  inventory: IDictionary<InventoryItem>
+  inventory: InventoryStore
 ): void {
   const requiredComponents = demand.material.components;
   if (requiredComponents) {
@@ -33,45 +37,64 @@ function addRequirementsForDemand(
         )
       } as InventoryItem;
 
-      // if (requirement.quantity === 0) return;
-
       addRequirementsForDemand(requirementsCollection, requirement, inventory);
       Vue.set(requirementsCollection, component.materialName, requirement);
     }
   }
 }
 
-const store: StoreOptions<RootState> = {
+export enum StoreGetter {
+  getAllRequirements = "getAllRequirements"
+}
+
+export enum StoreMutation {
+  setGameData = "setGameData",
+  setInventory = "setInventory",
+  setInventoryItemQuantity = "setInventoryItemQuantity",
+  updateDemand = "updateDemand"
+}
+
+export enum StoreState {
+  demands = "demands",
+  inventory = "inventory",
+  gameData = "gameData"
+}
+
+export enum StoreAction {
+  populateGameData = "populateGameData",
+  populateInitialInventory = "populateInitialInventory"
+}
+
+export default new Vuex.Store<RootState>({
   state: {
-    inventory: {} as IDictionary<InventoryItem>,
-    demands: {} as IDictionary<InventoryItem>,
-    //requirements: {} as IDictionary<InventoryItem>,
-    gameData: {} as GameData
+    inventory: {} as InventoryStore,
+    demands: {} as DemandsStore,
+    gameData: {} as GameDataStore
   },
   getters: {
-    maybeGetDemandForMaterial(
-      state
-    ): (material: Material) => InventoryItem | undefined {
-      return (material: Material): InventoryItem | undefined => {
-        return state.demands[material.name];
-      };
-    },
-    getInventoryItemQuantity(state): (material: Material) => number {
-      return (material: Material): number => {
-        return state.inventory[material.name]
-          ? state.inventory[material.name].quantity
-          : 0;
-      };
-    },
-    getDemandQuantity(state): (material: Material) => number {
-      return (material: Material): number => {
-        return state.inventory[material.name]
-          ? state.inventory[material.name].quantity
-          : 0;
-      };
-    },
-    [Getters.getAllRequirements]: function(state): IDictionary<InventoryItem> {
-      const newRequirements: IDictionary<InventoryItem> = {};
+    // maybeGetDemandForMaterial(
+    //   state
+    // ): (material: Material) => InventoryItem | undefined {
+    //   return (material: Material): InventoryItem | undefined => {
+    //     return state.demands[material.name];
+    //   };
+    // },
+    // getInventoryItemQuantity(state): (material: Material) => number {
+    //   return (material: Material): number => {
+    //     return state.inventory[material.name]
+    //       ? state.inventory[material.name].quantity
+    //       : 0;
+    //   };
+    // },
+    // getDemandQuantity(state): (material: Material) => number {
+    //   return (material: Material): number => {
+    //     return state.inventory[material.name]
+    //       ? state.inventory[material.name].quantity
+    //       : 0;
+    //   };
+    // },
+    [StoreGetter.getAllRequirements]: function(state): RequirementsStore {
+      const newRequirements: RequirementsStore = {};
       for (const materialName in state.demands) {
         const demand = state.demands[materialName];
         addRequirementsForDemand(newRequirements, demand, state.inventory);
@@ -80,36 +103,27 @@ const store: StoreOptions<RootState> = {
     }
   },
   mutations: {
-    setGameData(state, data: GameData): void {
-      Vue.set(state, "gameData", data);
+    [StoreMutation.setGameData](state, data: GameDataStore): void {
+      Vue.set(state, StoreState.gameData, data);
     },
-    setInventory(state, newInventory: IDictionary<InventoryItem>): void {
-      Vue.set(state, "inventory", newInventory);
+    [StoreMutation.setInventory](state, newInventory: InventoryStore): void {
+      Vue.set(state, StoreState.inventory, newInventory);
     },
-    setInventoryItemQuantity(state, item: InventoryItem): void {
+    [StoreMutation.setInventoryItemQuantity](state, item: InventoryItem): void {
       if (state.inventory[item.material.name])
         Vue.set(state.inventory[item.material.name], "quantity", item.quantity);
       else Vue.set(state.inventory, item.material.name, item);
     },
-    updateDemand(state, newDemand: InventoryItem): void {
-      // if (newDemand.material.components) {
-      //   for (const component of newDemand.material.components) {
-      //     Vue.set(
-      //       state.requirements,
-      //       component.materialName,
-      //       state.gameData.materials[component.materialName]
-      //     );
-      //   }
-      // }
+    [StoreMutation.updateDemand](state, newDemand: InventoryItem): void {
       Vue.set(state.demands, newDemand.material.name, newDemand);
     }
   },
   actions: {
-    populateGameData(context): void {
+    [StoreAction.populateGameData](context): void {
       const minesData = require("@/data/mines.json") as MineArea[];
       const materialsData = require("@/data/materials.json") as Material[];
 
-      const materials = {} as IDictionary<Material>;
+      const materials = {} as Dictionary<Material>;
       for (const material of materialsData) {
         Vue.set(materials, material.name, material);
       }
@@ -119,24 +133,22 @@ const store: StoreOptions<RootState> = {
         Vue.set(mines, mine.area, mine);
       }
 
-      const newGameData: GameData = {
+      const newGameData: GameDataStore = {
         materials,
         mines
       };
 
-      context.commit("setGameData", newGameData);
+      context.commit(StoreMutation.setGameData, newGameData);
     },
-    populateInitialInventory(context): void {
-      const rawInventory = {} as IDictionary<InventoryItem>;
+    [StoreAction.populateInitialInventory](context): void {
+      const rawInventory = {} as InventoryStore;
       for (const materialName in context.state.gameData.materials) {
         rawInventory[materialName] = {
           material: context.state.gameData.materials[materialName],
           quantity: 0
         } as InventoryItem;
       }
-      context.commit("setInventory", rawInventory);
+      context.commit(StoreMutation.setInventory, rawInventory);
     }
   }
-};
-
-export default new Vuex.Store<RootState>(store);
+} as StoreOptions<RootState>);

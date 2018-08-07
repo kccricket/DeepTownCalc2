@@ -11,15 +11,16 @@
 </template>
 
 <script lang="ts">
-import Vue, { PropOptions } from "vue";
+import Vue from "vue";
 import Component from "vue-class-component";
 import { Prop } from "vue-property-decorator";
 import MaterialSource from "@/game-types/MaterialSource";
 import { Getter } from "vuex-class";
-import Getters from "@/store-getters";
+import { StoreGetter } from "@/store";
 import InventoryItem from "@/game-types/InventoryItem";
-import { Dictionary, filter } from "lodash";
+import { filter } from "lodash";
 import RequirementRow from "@/components/RequirementRow.vue";
+import { RequirementsStore } from "@/game-types/RootState";
 
 @Component({
   components: {
@@ -30,8 +31,8 @@ export default class RequirementSourceBlock extends Vue {
   @Prop({ type: String, required: true })
   public source!: MaterialSource;
 
-  @Getter(Getters.getAllRequirements)
-  private allRequirements!: Dictionary<InventoryItem>;
+  @Getter(StoreGetter.getAllRequirements)
+  private allRequirements!: RequirementsStore;
 
   private get requirementsForThisSource(): InventoryItem[] {
     return filter(

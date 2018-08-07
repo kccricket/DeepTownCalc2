@@ -12,12 +12,11 @@ import Vue from "vue";
 import Component from "vue-class-component";
 import RequirementSourceBlock from "@/components/RequirementSourceBlock.vue";
 import { Getter } from "vuex-class";
-import Getters from "@/store-getters";
-import IDictionary from "@/game-types/IDictionary";
 import InventoryItem from "@/game-types/InventoryItem";
 import MaterialSource from "@/game-types/MaterialSource";
 import { mapValues, values, uniq } from "lodash";
-import InventoryVue from "@/components/Inventory.vue";
+import { RequirementsStore } from "@/game-types/RootState";
+import { StoreGetter } from "@/store";
 
 @Component({
   components: {
@@ -25,8 +24,8 @@ import InventoryVue from "@/components/Inventory.vue";
   }
 })
 export default class Requirements extends Vue {
-  @Getter(Getters.getAllRequirements)
-  public allRequirements!: IDictionary<InventoryItem>;
+  @Getter(StoreGetter.getAllRequirements)
+  private allRequirements!: RequirementsStore;
 
   private get materialSources(): MaterialSource[] {
     return uniq(

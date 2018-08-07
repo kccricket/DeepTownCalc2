@@ -5,7 +5,7 @@
       filterable
       value-key="name">
       <el-option
-        v-for="material in materials"
+        v-for="material in gameData.materials"
         :label="material.name"
         :key="material.name"
         :value="material" />
@@ -27,40 +27,40 @@
 import Vue from "vue";
 import Material from "@/game-types/Material";
 import InventoryItem from "@/game-types/InventoryItem";
-import RootState from "@/game-types/RootState";
-import IDictionary from "@/game-types/IDictionary";
+import Component from "vue-class-component";
+import { State, Mutation } from "vuex-class";
+import { StoreState, StoreMutation } from "@/store";
+import { GameDataStore } from "@/game-types/RootState";
 
-export default Vue.extend({
-  name: "DemandInput",
-  data() {
-    return {
-      newDemand: {
-        material: {} as Material,
-        quantity: 0
-      } as InventoryItem
-    };
-  },
-  computed: {
-    materials(): IDictionary<Material> {
-      return (this.$store.state as RootState).gameData.materials;
-    },
-    inputIsValid(): boolean {
-      if (this.newDemand.material && this.newDemand.quantity > 0) return true;
-      else return false;
-    }
-  },
-  methods: {
-    addDemand(): void {
-      this.$store.commit("updateDemand", this.newDemand);
-    },
-    clearDemandInput(): void {
-      this.newDemand = {
-        material: {} as Material,
-        quantity: 0
-      } as InventoryItem;
-    }
+@Component
+export default class DemandInput extends Vue {
+  @Mutation(StoreMutation.updateDemand)
+  private updateDemand!: (newDemand: InventoryItem) => void;
+
+  @State(StoreState.gameData)
+  private gameData!: GameDataStore;
+
+  private newDemand: InventoryItem = {
+    material: {} as Material,
+    quantity: 0
+  } as InventoryItem;
+
+  private get inputIsValid(): boolean {
+    if (this.newDemand.material && this.newDemand.quantity > 0) return true;
+    else return false;
   }
-});
+
+  private addDemand(): void {
+    this.updateDemand(this.newDemand);
+  }
+
+  private clearDemandInput(): void {
+    this.newDemand = {
+      material: {} as Material,
+      quantity: 0
+    } as InventoryItem;
+  }
+}
 </script>
 
 <style scoped>
