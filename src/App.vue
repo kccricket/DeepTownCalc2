@@ -48,6 +48,10 @@ html {
   box-sizing: inherit;
 }
 
+body {
+  font-size: 16px;
+}
+
 .app {
   display: flex;
   justify-content: center;
@@ -75,7 +79,7 @@ html {
   margin: 0.25em 0;
 }
 
-.el-input-number {
+.app .el-input-number {
   margin: 0 8px;
   width: 120px;
 }
@@ -83,7 +87,26 @@ html {
 .material-demanded .el-input__inner {
   background-color: #fcc;
 }
+
 .material-demand-satisfied .el-input__inner {
   background-color: #6a6;
+}
+
+.demand-input {
+  display: flex;
+
+  .el-select {
+    flex: 1 0 0;
+  }
+}
+
+.demand-input {
+  .el-input-number {
+    flex: 0 0 120px;
+  }
+
+  .el-button {
+    flex: 0 0 0;
+  }
 }
 </style>
