@@ -2,7 +2,6 @@
   <div 
     id="app" 
     class="app">
-
     <inventory />
     <demands />
     <requirements />
@@ -52,13 +51,15 @@ html {
 .app {
   display: flex;
   justify-content: center;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .column {
   height: 100vh;
   overflow-y: auto;
-  // flex: 1 0 auto;
-  margin: 16px;
+  flex: 1 0 0;
+  margin: 0 16px;
 }
 
 .list-of-materials {
@@ -72,5 +73,17 @@ html {
   justify-content: flex-end;
   align-items: center;
   margin: 0.25em 0;
+}
+
+.el-input-number {
+  margin: 0 8px;
+  width: 120px;
+}
+
+.material-demanded .el-input__inner {
+  background-color: #fcc;
+}
+.material-demand-satisfied .el-input__inner {
+  background-color: #6a6;
 }
 </style>

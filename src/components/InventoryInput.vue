@@ -74,12 +74,3 @@ export default class InventoryRow extends Vue {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-.material-demanded {
-  background-color: #a60;
-}
-.material-demand-satisfied {
-  background-color: #6a6;
-}
-</style>

@@ -29,7 +29,3 @@ export default class Inventory extends Vue {
   private gameData!: GameDataStore;
 }
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang="scss" scoped>
-</style>

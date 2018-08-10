@@ -53,6 +53,3 @@ export default class DemandRow extends Vue {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-</style>

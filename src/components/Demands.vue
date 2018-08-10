@@ -37,6 +37,3 @@ export default class Demands extends Vue {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-</style>

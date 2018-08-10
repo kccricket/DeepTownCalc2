@@ -13,6 +13,7 @@
     "normalize.css": "^8.0.0",
     "timespan": "^2.3.0",
     "vue": "^2.5.16",
+    "vue-mq": "^0.2.1",
     "vuex": "^3.0.1",
     "vuex-persistedstate": "^2.5.4"
   },
