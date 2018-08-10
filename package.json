@@ -10,9 +10,9 @@
   },
   "dependencies": {
     "element-ui": "^2.4.4",
+    "interspell": "^0.3.7",
     "lodash": "^4.17.10",
     "normalize.css": "^8.0.0",
-    "timespan": "^2.3.0",
     "vue": "^2.5.16",
     "vue-mq": "^0.2.1",
     "vuex": "^3.0.1",

@@ -16,17 +16,18 @@ export default class RequirementRow extends Vue {
   private get timeString(): string {
     if (!this.requirement.material.time) return "";
 
-    const timespan = require("timespan");
+    const insterspell = require("interspell");
 
-    const span = timespan.fromSeconds(
+    const seconds =
       this.requirement.quantity *
-        (this.requirement.material.time! /
-          (this.requirement.material.yield
-            ? this.requirement.material.yield!
-            : 1))
-    );
+      (this.requirement.material.time! /
+        (this.requirement.material.yield
+          ? this.requirement.material.yield!
+          : 1));
 
-    return span.toString();
+    const i1 = new insterspell(seconds * 1000);
+
+    return i1.toString("condensed");
   }
 }
 </script>
