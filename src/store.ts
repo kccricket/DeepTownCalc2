@@ -14,6 +14,20 @@ import { Dictionary } from "lodash";
 
 Vue.use(Vuex);
 
+class RequirementItem implements InventoryItem {
+  public readonly material: Material;
+  public readonly quantity: number;
+  public readonly displayQuantity: number;
+
+  //public constructor(thing: InventoryItem);
+  public constructor(thing: { material: Material; quantity: number }) {
+    this.material = thing.material;
+    const materialYield: number = thing.material.yield || 1;
+    this.quantity = Math.ceil(thing.quantity / materialYield);
+    this.displayQuantity = this.quantity * materialYield;
+  }
+}
+
 function addRequirementsForDemand(
   requirementsCollection: RequirementsStore,
   demand: InventoryItem,
