@@ -24,7 +24,7 @@
       "dom.iterable",
       "scripthost"
     ],
-    "resolveJsonModule": true,
+    "resolveJsonModule": false,
     "keyofStringsOnly": true,
   },
   "include": [

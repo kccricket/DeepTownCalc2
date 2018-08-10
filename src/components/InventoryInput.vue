@@ -4,6 +4,7 @@
       'material-demanded': isMaterialRequired,
       'material-demand-satisfied': isMaterialRequirementSatisfied
     }"
+    class="list-of-materials-item"
   >
     <label :for="'inventory-'+material.name">{{ material.name }}</label>
     <el-input-number 
@@ -23,8 +24,13 @@ import { Prop } from "vue-property-decorator";
 import { Getter, Mutation, State } from "vuex-class";
 import { StoreGetter, StoreMutation, StoreState } from "@/store";
 import { RequirementsStore, InventoryStore } from "@/game-types/RootState";
+import { InputNumber } from "element-ui";
 
-@Component
+@Component({
+  components: {
+    "el-input-number": InputNumber
+  }
+})
 export default class InventoryRow extends Vue {
   @Prop({
     type: Object as () => Material,

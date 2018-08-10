@@ -1,12 +1,14 @@
 <template>
-  <div>
+  <div class="demands column">
+    <h2>Demands</h2>
     <demand-input />
-    <div class="demands-list">
+    <ul class="demands-list list-of-materials">
       <demand-row
         v-for="demand in demands"
         :key="demand.name"
-        :demand="demand" />
-    </div>
+        :demand="demand"
+        @remove-demand="removeDemand" />
+    </ul>
   </div>
 </template>
 
@@ -29,6 +31,10 @@ import { DemandsStore } from "@/game-types/RootState";
 export default class Demands extends Vue {
   @State(StoreState.demands)
   private demands!: DemandsStore;
+
+  private removeDemand(materialName: string): void {
+    Vue.delete(this.demands, materialName);
+  }
 }
 </script>
 

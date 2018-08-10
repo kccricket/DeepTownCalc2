@@ -1,7 +1,10 @@
 <template>
-  <div id="app">
-    <demands />
+  <div 
+    id="app" 
+    class="app">
+
     <inventory />
+    <demands />
     <requirements />
   </div>
 </template>
@@ -35,5 +38,39 @@ export default class App extends Vue {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+.app {
+  display: flex;
+  justify-content: center;
+}
+
+.column {
+  height: 100vh;
+  overflow-y: auto;
+  // flex: 1 0 auto;
+  margin: 16px;
+}
+
+.list-of-materials {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.list-of-materials-item {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin: 0.25em 0;
+}
 </style>

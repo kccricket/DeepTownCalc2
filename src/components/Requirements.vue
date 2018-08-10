@@ -1,5 +1,5 @@
 <template>
-  <div class="requirements">
+  <div class="requirements column">
     <requirement-source-block
       v-for="source in materialSources"
       :key="source"

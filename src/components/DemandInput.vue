@@ -1,7 +1,7 @@
 <template>
   <div class="demand-input">
     <el-select
-      v-model="newDemand.material"
+      v-model="newDemandMaterial"
       filterable
       value-key="name">
       <el-option
@@ -10,8 +10,12 @@
         :key="material.name"
         :value="material" />
     </el-select>
+    <!-- <el-cascader
+      v-model="newDemand.materialName"
+      :options="cascadedMaterials"
+      filterable /> -->
     <el-input-number
-      v-model="newDemand.quantity"
+      v-model="newDemandQuantity"
       :controls="false"
       :min="0" />
     <el-button
@@ -31,8 +35,26 @@ import Component from "vue-class-component";
 import { State, Mutation } from "vuex-class";
 import { StoreState, StoreMutation } from "@/store";
 import { GameDataStore } from "@/game-types/RootState";
+import { Select, Option, InputNumber, Button, Cascader } from "element-ui";
+import MaterialSource from "@/game-types/MaterialSource";
+import QuantifiedMaterial from "@/game-types/QuantifiedMaterial";
 
-@Component
+interface CascadeEntry {
+  value: string | Material;
+  label: string;
+  /* eslint-disable typescript/no-use-before-define */
+  children?: CascadeEntry[] /* eslint-enable typescript/no-use-before-define  */;
+}
+
+@Component({
+  components: {
+    "el-select": Select,
+    "el-option": Option,
+    "el-input-number": InputNumber,
+    "el-button": Button,
+    "el-cascader": Cascader
+  }
+})
 export default class DemandInput extends Vue {
   @Mutation(StoreMutation.updateDemand)
   private updateDemand!: (newDemand: InventoryItem) => void;
@@ -40,25 +62,52 @@ export default class DemandInput extends Vue {
   @State(StoreState.gameData)
   private gameData!: GameDataStore;
 
-  private newDemand: InventoryItem = {
-    material: {} as Material,
-    quantity: 0
-  } as InventoryItem;
+  private newDemandMaterial: Material = {} as Material;
+  private newDemandQuantity: number = 0;
 
   private get inputIsValid(): boolean {
-    if (this.newDemand.material && this.newDemand.quantity > 0) return true;
+    if (this.newDemandMaterial && this.newDemandQuantity > 0) return true;
     else return false;
   }
 
+  private get cascadedMaterials(): CascadeEntry[] {
+    let cascaded: CascadeEntry[] = [];
+    let sourceOrder: { [index: string]: number } = {};
+    let sourceCounter: number = 0;
+
+    for (const materialSource in MaterialSource) {
+      sourceOrder[MaterialSource[materialSource]] = sourceCounter;
+      cascaded[sourceCounter++] = {
+        value: MaterialSource[materialSource],
+        label: materialSource,
+        children: [] as CascadeEntry[]
+      };
+    }
+
+    for (const materialName in this.gameData.materials) {
+      const material: Material = this.gameData.materials[materialName];
+      const sourceIndex: number = sourceOrder[material.source];
+      cascaded[sourceIndex].children!.push({
+        value: materialName,
+        label: materialName
+      } as CascadeEntry);
+    }
+
+    return cascaded;
+  }
+
   private addDemand(): void {
-    this.updateDemand(this.newDemand);
+    this.updateDemand({
+      material: this.newDemandMaterial,
+      quantity: this.newDemandQuantity
+    } as InventoryItem);
+
+    this.clearDemandInput();
   }
 
   private clearDemandInput(): void {
-    this.newDemand = {
-      material: {} as Material,
-      quantity: 0
-    } as InventoryItem;
+    this.newDemandMaterial = {} as Material;
+    this.newDemandQuantity = 0;
   }
 }
 </script>

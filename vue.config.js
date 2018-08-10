@@ -1,4 +1,4 @@
-const webpack = require("webpack");
+const NormalModuleReplacementPlugin = require("webpack/lib/NormalModuleReplacementPlugin");
 
 module.exports = {
   baseUrl:
@@ -6,7 +6,7 @@ module.exports = {
   configureWebpack: {
     devtool: "source-map",
     plugins: [
-      new webpack.NormalModuleReplacementPlugin(
+      new NormalModuleReplacementPlugin(
         /element-ui[/\\]lib[/\\]locale[/\\]lang[/\\]zh-CN/,
         "element-ui/lib/locale/lang/en"
       )

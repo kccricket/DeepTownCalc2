@@ -1,12 +1,19 @@
 <template>
-  <li>
-    <span class="demand-name">{{ demand.material.name }}</span>
+  <li class="list-of-materials-item">
+    <span
+      class="demand-name">{{ demand.material.name }}</span>
     <el-input-number
       v-model="demandQuantity"
       :controls="false"
       :id="'demand-'+demand.material.name"
       :min="0"
       class="demand-quantity" />
+    <el-button 
+      icon="el-icon-delete"
+      type="danger"
+      circle
+      @click="removeDemand" />
+
   </li>
 </template>
 
@@ -16,8 +23,14 @@ import InventoryItem from "@/game-types/InventoryItem";
 import { Prop, Component } from "vue-property-decorator";
 import { Mutation } from "vuex-class";
 import { StoreMutation } from "@/store";
+import { InputNumber, Button } from "element-ui";
 
-@Component
+@Component({
+  components: {
+    "el-input-number": InputNumber,
+    "el-button": Button
+  }
+})
 export default class DemandRow extends Vue {
   @Mutation(StoreMutation.updateDemand)
   private updateDemand!: (newDemand: InventoryItem) => void;
@@ -33,6 +46,10 @@ export default class DemandRow extends Vue {
   }
   private set demandQuantity(quantity: number) {
     this.updateDemand({ ...this.demand, quantity } as InventoryItem);
+  }
+
+  private removeDemand(): void {
+    this.$emit("remove-demand", this.demand.material.name);
   }
 }
 </script>
