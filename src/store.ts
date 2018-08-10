@@ -19,15 +19,19 @@ function addRequirementsForDemand(
   demand: InventoryItem,
   inventory: InventoryStore
 ): void {
+  const demandYield = demand.material.yield || 1;
+  const demandUnits = Math.ceil(demand.quantity / demandYield);
+
   const requiredComponents = demand.material.components;
   if (requiredComponents) {
     for (const component of requiredComponents) {
+      // TODO: Move this totalOfMaterial math into a function. OR maybe this math needs to happen to demandUnits?
       var totalOfMaterial: number = requirementsCollection[
         component.materialName
       ]
         ? requirementsCollection[component.materialName].quantity +
-          component.quantity * demand.quantity
-        : component.quantity * demand.quantity;
+          component.quantity * demandUnits
+        : component.quantity * demandUnits;
 
       const requirement = {
         material: inventory[component.materialName].material,
@@ -38,9 +42,15 @@ function addRequirementsForDemand(
       } as InventoryItem;
 
       addRequirementsForDemand(requirementsCollection, requirement, inventory);
-      Vue.set(requirementsCollection, component.materialName, requirement);
     }
   }
+
+  const displayDemand = {
+    material: demand.material,
+    quantity: demandUnits * demandYield
+  };
+
+  Vue.set(requirementsCollection, demand.material.name, displayDemand);
 }
 
 export enum StoreGetter {
@@ -96,7 +106,7 @@ export default new Vuex.Store<RootState>({
     [StoreGetter.getAllRequirements]: function(state): RequirementsStore {
       const newRequirements: RequirementsStore = {};
       for (const materialName in state.demands) {
-        const demand = state.demands[materialName];
+        const demand: InventoryItem = state.demands[materialName];
         addRequirementsForDemand(newRequirements, demand, state.inventory);
       }
       return newRequirements;
