@@ -3,6 +3,7 @@ const NormalModuleReplacementPlugin = require("webpack/lib/NormalModuleReplaceme
 module.exports = {
   baseUrl:
     process.env.NODE_ENV === "production" ? process.env.DEPLOY_URL_ROOT : "/",
+
   configureWebpack: {
     devtool: "source-map",
     plugins: [
@@ -11,5 +12,10 @@ module.exports = {
         "element-ui/lib/locale/lang/en"
       )
     ]
+  },
+
+  pluginOptions: {
+    lintStyleOnBuild: true,
+    stylelint: {}
   }
 };

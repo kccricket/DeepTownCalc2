@@ -55,27 +55,27 @@ body {
 .app {
   display: flex;
   justify-content: center;
-  max-width: 1200px;
   margin: 0 auto;
+  max-width: 1200px;
 }
 
 .column {
-  height: 100vh;
-  overflow-y: auto;
   flex: 1 0 0;
+  height: 100vh;
   margin: 0 16px;
+  overflow-y: auto;
 }
 
 .list-of-materials {
   list-style-type: none;
-  padding: 0;
   margin: 0;
+  padding: 0;
 }
 
 .list-of-materials-item {
+  align-items: center;
   display: flex;
   justify-content: flex-end;
-  align-items: center;
   margin: 0.25em 0;
 }
 
@@ -84,6 +84,7 @@ body {
   width: 120px;
 }
 
+/* stylelint-disable selector-class-pattern */
 .material-demanded .el-input__inner {
   background-color: #fcc;
 }
@@ -91,6 +92,7 @@ body {
 .material-demand-satisfied .el-input__inner {
   background-color: #6a6;
 }
+/* stylelint-enable selector-class-pattern */
 
 .demand-input {
   display: flex;
@@ -98,9 +100,7 @@ body {
   .el-select {
     flex: 1 0 0;
   }
-}
 
-.demand-input {
   .el-input-number {
     flex: 0 0 120px;
   }
