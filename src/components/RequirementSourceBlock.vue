@@ -35,7 +35,7 @@ export default class RequirementSourceBlock extends Vue {
   @Getter(StoreGetter.getAllRequirements)
   private allRequirements!: RequirementsStore;
 
-  private get requirementsForThisSource(): InventoryItem[] {
+  private get requirementsForThisSource(): RequiredItem[] {
     return filter(
       this.allRequirements,
       (r): boolean => {

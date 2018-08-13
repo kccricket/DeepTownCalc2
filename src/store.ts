@@ -12,7 +12,6 @@ import {
 import MineArea from "@/game-types/MineArea";
 import { Dictionary } from "lodash";
 import RequiredItem from "@/game-types/RequiredItem";
-import DemandItem from "@/game-types/DemandItem";
 
 Vue.use(Vuex);
 
@@ -28,7 +27,8 @@ function addRequirementsForDemand(
         inventory[component.materialName].material;
       if (!requirementsCollection[component.materialName]) {
         requirementsCollection[component.materialName] = new RequiredItem(
-          componentMaterial
+          componentMaterial,
+          inventory[component.materialName]
         );
       }
       requirementsCollection[component.materialName].requiredBy.push(demand);
@@ -100,7 +100,8 @@ export default new Vuex.Store<RootState>({
         const demand: InventoryItem = state.demands[materialName];
         if (!newRequirements[demand.material.name]) {
           newRequirements[demand.material.name] = new RequiredItem(
-            demand.material
+            demand.material,
+            state.inventory[demand.material.name]
           );
         }
 
