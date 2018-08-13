@@ -1,5 +1,5 @@
 <template>
-  <li>{{ requirement.material.name }}: {{ requirement.quantity }}{{ " at "+timeString }} </li>
+  <li>{{ requirement.material.name }}: {{ requirement.displayQuantity }}{{ timeString }}</li>
 </template>
 
 <script lang="ts">
@@ -7,27 +7,23 @@ import Vue from "vue";
 import Component from "vue-class-component";
 import { Prop } from "vue-property-decorator";
 import InventoryItem from "@/game-types/InventoryItem";
+import { State } from "vuex-class";
+import { StoreState } from "@/store";
+import { InventoryStore } from "@/game-types/RootState";
+import RequiredItem from "@/game-types/RequiredItem";
 
 @Component
 export default class RequirementRow extends Vue {
-  @Prop({ type: Object as () => InventoryItem, required: true })
-  public requirement!: InventoryItem;
+  @Prop({ type: Object as () => RequiredItem, required: true })
+  public requirement!: RequiredItem;
 
   private get timeString(): string {
-    if (!this.requirement.material.time) return "";
+    const seconds = this.requirement.getSecondsToMake();
+    if (!seconds) return "";
 
     const insterspell = require("interspell");
-
-    const seconds =
-      this.requirement.quantity *
-      (this.requirement.material.time! /
-        (this.requirement.material.yield
-          ? this.requirement.material.yield!
-          : 1));
-
     const i1 = new insterspell(seconds * 1000);
-
-    return i1.toString("condensed");
+    return " at " + i1.toString("condensed");
   }
 }
 </script>
