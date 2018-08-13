@@ -25,6 +25,7 @@ import { Getter, Mutation, State } from "vuex-class";
 import { StoreGetter, StoreMutation, StoreState } from "@/store";
 import { RequirementsStore, InventoryStore } from "@/game-types/RootState";
 import { InputNumber } from "element-ui";
+import RequiredItem from "@/game-types/RequiredItem";
 
 @Component({
   components: {

@@ -11,6 +11,8 @@ import {
 } from "@/game-types/RootState";
 import MineArea from "@/game-types/MineArea";
 import { Dictionary } from "lodash";
+import RequiredItem from "@/game-types/RequiredItem";
+import DemandItem from "@/game-types/DemandItem";
 
 Vue.use(Vuex);
 
@@ -19,37 +21,27 @@ function addRequirementsForDemand(
   demand: InventoryItem,
   inventory: InventoryStore
 ): void {
-  const demandYield = demand.material.yield || 1;
-  const demandUnits = Math.ceil(demand.quantity / demandYield);
-
   const requiredComponents = demand.material.components;
   if (requiredComponents) {
     for (const component of requiredComponents) {
-      var totalOfMaterial: number = requirementsCollection[
-        component.materialName
-      ]
-        ? requirementsCollection[component.materialName].quantity +
-          component.quantity * demandUnits
-        : component.quantity * demandUnits;
-
-      const requirement = {
-        material: inventory[component.materialName].material,
-        quantity: Math.max(
-          0,
-          totalOfMaterial - inventory[component.materialName].quantity
-        )
-      } as InventoryItem;
-
-      addRequirementsForDemand(requirementsCollection, requirement, inventory);
+      let componentMaterial: Material =
+        inventory[component.materialName].material;
+      if (!requirementsCollection[component.materialName]) {
+        requirementsCollection[component.materialName] = new RequiredItem(
+          componentMaterial
+        );
+      }
+      requirementsCollection[component.materialName].requiredBy.push(demand);
+      addRequirementsForDemand(
+        requirementsCollection,
+        {
+          material: componentMaterial,
+          quantity: demand.quantity * component.quantity
+        } as InventoryItem,
+        inventory
+      );
     }
   }
-
-  const displayDemand = {
-    material: demand.material,
-    quantity: demandUnits * demandYield
-  };
-
-  Vue.set(requirementsCollection, demand.material.name, displayDemand);
 }
 
 export enum StoreGetter {
@@ -106,6 +98,16 @@ export default new Vuex.Store<RootState>({
       const newRequirements: RequirementsStore = {};
       for (const materialName in state.demands) {
         const demand: InventoryItem = state.demands[materialName];
+        if (!newRequirements[demand.material.name]) {
+          newRequirements[demand.material.name] = new RequiredItem(
+            demand.material
+          );
+        }
+
+        newRequirements[demand.material.name].requiredBy.push({
+          material: demand.material,
+          quantity: demand.quantity
+        } as InventoryItem);
         addRequirementsForDemand(newRequirements, demand, state.inventory);
       }
       return newRequirements;

@@ -17,6 +17,7 @@ import MaterialSource from "@/game-types/MaterialSource";
 import { mapValues, values, uniq } from "lodash";
 import { RequirementsStore } from "@/game-types/RootState";
 import { StoreGetter } from "@/store";
+import RequiredItem from "@/game-types/RequiredItem";
 
 @Component({
   components: {

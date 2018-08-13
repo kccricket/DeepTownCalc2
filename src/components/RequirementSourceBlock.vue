@@ -21,6 +21,7 @@ import InventoryItem from "@/game-types/InventoryItem";
 import { filter } from "lodash";
 import RequirementRow from "@/components/RequirementRow.vue";
 import { RequirementsStore } from "@/game-types/RootState";
+import RequiredItem from "@/game-types/RequiredItem";
 
 @Component({
   components: {
@@ -37,7 +38,12 @@ export default class RequirementSourceBlock extends Vue {
   private get requirementsForThisSource(): InventoryItem[] {
     return filter(
       this.allRequirements,
-      r => r.material.source == this.source && r.quantity > 0
+      (r): boolean => {
+        const sourceMatches: boolean = r.material.source == this.source;
+        const hasQuantity: boolean = r.quantity > 0;
+
+        return sourceMatches && hasQuantity;
+      }
     );
   }
 }
