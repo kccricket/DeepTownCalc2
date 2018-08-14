@@ -1,15 +1,13 @@
 import InventoryItem from "@/game-types/InventoryItem";
 import Material from "@/game-types/Material";
 import MaterialComponent from "@/game-types/MaterialComponent";
+import { DemandInventoryItem } from "@/game-types/DemandInventoryItem";
 
-export default class RequiredItem {
+export default class RequiredItem implements DemandInventoryItem {
   public readonly material: Material;
   public readonly requiredBy: InventoryItem[] = new Array<InventoryItem>();
   public readonly inventoryItem: InventoryItem;
-
-  public get displayQuantity(): number {
-    return this.yieldCount * this.materialYield;
-  }
+  public readonly isDemanded: boolean = true;
 
   private get materialYield(): number {
     return this.material.yield || 1;
@@ -22,6 +20,10 @@ export default class RequiredItem {
   public constructor(thisMaterial: Material, inventoryItem: InventoryItem) {
     this.material = thisMaterial;
     this.inventoryItem = inventoryItem;
+  }
+
+  public get displayQuantity(): number {
+    return this.yieldCount * this.materialYield;
   }
 
   public get quantity(): number {
@@ -50,11 +52,6 @@ export default class RequiredItem {
       }
     }
 
-    // if (units < 1) {
-    //   throw new RangeError(
-    //     "Holy guacamole. The quantity of this RequiredItem is less than one. God speed."
-    //   );
-    // }
     units -= this.inventoryItem.quantity;
 
     return units < 0 ? 0 : units;

@@ -12,6 +12,7 @@ import {
 import MineArea from "@/game-types/MineArea";
 import { Dictionary } from "lodash";
 import RequiredItem from "@/game-types/RequiredItem";
+import { DemandItem } from "@/game-types/DemandItem";
 
 Vue.use(Vuex);
 
@@ -31,7 +32,9 @@ function addRequirementsForDemand(
           inventory[component.materialName]
         );
       }
-      requirementsCollection[component.materialName].requiredBy.push(demand);
+      requirementsCollection[component.materialName].requiredBy.push(
+        new DemandItem(demand, requirementsCollection[component.materialName])
+      );
       addRequirementsForDemand(
         requirementsCollection,
         {
