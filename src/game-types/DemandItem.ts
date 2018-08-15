@@ -20,6 +20,6 @@ export class DemandItem implements DemandInventoryItem {
   }
 
   public get isDemanded(): boolean {
-    return this.parent.quantity == 0;
+    return true;
   }
 }

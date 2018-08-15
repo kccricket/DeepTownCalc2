@@ -17,4 +17,5 @@ export interface RootState {
   inventory: InventoryStore;
   demands: DemandsStore;
   gameData: GameDataStore;
+  requirements: RequirementsStore;
 }

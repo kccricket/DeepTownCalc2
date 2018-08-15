@@ -73,7 +73,8 @@ export default new Vuex.Store<RootState>({
   state: {
     inventory: {} as InventoryStore,
     demands: {} as DemandsStore,
-    gameData: {} as GameDataStore
+    gameData: {} as GameDataStore,
+    requirements: {} as RequirementsStore
   },
   getters: {
     // maybeGetDemandForMaterial(
@@ -114,7 +115,8 @@ export default new Vuex.Store<RootState>({
         } as InventoryItem);
         addRequirementsForDemand(newRequirements, demand, state.inventory);
       }
-      return newRequirements;
+      state.requirements = newRequirements;
+      return state.requirements;
     }
   },
   mutations: {
