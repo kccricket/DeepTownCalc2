@@ -3,11 +3,13 @@ import Material from "@/game-types/Material";
 import MaterialComponent from "@/game-types/MaterialComponent";
 import { DemandInventoryItem } from "@/game-types/DemandInventoryItem";
 
-export default class RequiredItem implements DemandInventoryItem {
+export class RequiredItem implements DemandInventoryItem {
   public readonly material: Material;
   public readonly requiredBy: InventoryItem[] = new Array<InventoryItem>();
   public readonly inventoryItem: InventoryItem;
-  public readonly isDemanded: boolean = true;
+  public get isDemanded(): boolean {
+    return this.quantity > 0;
+  }
 
   private get materialYield(): number {
     return this.material.yield || 1;
@@ -17,9 +19,14 @@ export default class RequiredItem implements DemandInventoryItem {
     return Math.ceil(this.quantity / this.materialYield);
   }
 
-  public constructor(thisMaterial: Material, inventoryItem: InventoryItem) {
+  public constructor(
+    thisMaterial: Material,
+    inventoryItem: InventoryItem,
+    rootDemand?: InventoryItem
+  ) {
     this.material = thisMaterial;
     this.inventoryItem = inventoryItem;
+    if (rootDemand) this.requiredBy.push(rootDemand);
   }
 
   public get displayQuantity(): number {

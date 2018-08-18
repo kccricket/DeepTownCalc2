@@ -4,10 +4,9 @@
     <demand-input />
     <ul class="demands-list list-of-materials">
       <demand-row
-        v-for="demand in demands"
+        v-for="demand in activeDemands"
         :key="demand.name"
-        :demand="demand"
-        @remove-demand="removeDemand" />
+        :demand="demand" />
     </ul>
   </div>
 </template>
@@ -18,9 +17,10 @@ import DemandInput from "@/components/DemandInput.vue";
 import DemandRow from "@/components/DemandRow.vue";
 import InventoryItem from "@/game-types/InventoryItem";
 import Component from "vue-class-component";
-import { State } from "vuex-class";
-import { StoreState } from "@/store";
+import { State, Getter } from "vuex-class";
+import { StoreState, StoreGetter } from "@/store";
 import { DemandsStore } from "@/game-types/RootState";
+import { DemandItem } from "@/game-types/DemandItem";
 
 @Component({
   components: {
@@ -29,11 +29,7 @@ import { DemandsStore } from "@/game-types/RootState";
   }
 })
 export default class Demands extends Vue {
-  @State(StoreState.demands)
-  private demands!: DemandsStore;
-
-  private removeDemand(materialName: string): void {
-    Vue.delete(this.demands, materialName);
-  }
+  @Getter(StoreGetter.getActiveDemands)
+  private activeDemands!: DemandsStore;
 }
 </script>

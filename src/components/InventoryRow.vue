@@ -1,8 +1,8 @@
 <template>
   <li
     :class="{
-      'material-demanded': isMaterialRequired,
-      'material-demand-satisfied': isMaterialRequirementSatisfied
+      'material-demanded': isThisMaterialDemanded,
+      'material-demand-satisfied': isThisMaterialRequirementSatisfied
     }"
     class="list-of-materials-item"
   >
@@ -23,9 +23,14 @@ import Component from "vue-class-component";
 import { Prop } from "vue-property-decorator";
 import { Getter, Mutation, State } from "vuex-class";
 import { StoreGetter, StoreMutation, StoreState } from "@/store";
-import { RequirementsStore, InventoryStore } from "@/game-types/RootState";
+import {
+  RequirementsStore,
+  InventoryStore,
+  DemandsStore
+} from "@/game-types/RootState";
 import { InputNumber } from "element-ui";
-import RequiredItem from "@/game-types/RequiredItem";
+import { RequiredItem } from "@/game-types/RequiredItem";
+import { DemandInventoryItem } from "@/game-types/DemandInventoryItem";
 
 @Component({
   components: {
@@ -39,8 +44,11 @@ export default class InventoryRow extends Vue {
   })
   public material!: Material;
 
-  @Getter(StoreGetter.getAllRequirements)
-  private allRequirements!: RequirementsStore;
+  @Getter(StoreGetter.getActiveRequirements)
+  private activeRequirements!: RequirementsStore;
+
+  @Getter(StoreGetter.getActiveDemands)
+  private activeDemands!: DemandsStore;
 
   @Mutation(StoreMutation.setInventoryItemQuantity)
   private setInventoryItemQuantity!: (payload: InventoryItem) => void;
@@ -48,19 +56,18 @@ export default class InventoryRow extends Vue {
   @State(StoreState.inventory)
   private inventory!: InventoryStore;
 
-  private get requiredQuantity(): number {
-    const requirements: RequirementsStore = this.allRequirements;
-    return requirements[this.material.name]
-      ? requirements[this.material.name].quantity
-      : 0;
+  private isMaterialDemanded(demand: DemandInventoryItem) {
+    return demand ? demand.isDemanded : false;
   }
 
-  private get isMaterialRequired(): boolean {
-    return this.allRequirements[this.material.name] ? true : false;
+  private get isThisMaterialDemanded(): boolean {
+    return this.isMaterialDemanded(this.activeDemands[this.material.name]);
   }
 
-  private get isMaterialRequirementSatisfied(): boolean {
-    return this.isMaterialRequired && this.requiredQuantity === 0;
+  private get isThisMaterialRequirementSatisfied(): boolean {
+    return !this.isMaterialDemanded(
+      this.activeRequirements[this.material.name]
+    );
   }
 
   private get inventoryQuantity(): number {
