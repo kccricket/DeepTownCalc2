@@ -15,13 +15,13 @@ import Vue from "vue";
 import Component from "vue-class-component";
 import { Prop } from "vue-property-decorator";
 import MaterialSource from "@/game-types/MaterialSource";
-import { Getter } from "vuex-class";
+import { Getter, State } from "vuex-class";
 import { StoreGetter } from "@/store";
 import InventoryItem from "@/game-types/InventoryItem";
-import { filter } from "lodash";
+import { filter, keyBy } from "lodash";
 import RequirementRow from "@/components/RequirementRow.vue";
-import { RequirementsStore } from "@/game-types/RootState";
-import RequiredItem from "@/game-types/RequiredItem";
+import { RequirementsStore, RootState } from "@/game-types/RootState";
+import { RequiredItem } from "@/game-types/RequiredItem";
 
 @Component({
   components: {
@@ -29,21 +29,16 @@ import RequiredItem from "@/game-types/RequiredItem";
   }
 })
 export default class RequirementSourceBlock extends Vue {
+  @Getter(StoreGetter.getActiveRequirements)
+  private activeRequirements!: RequirementsStore;
+
   @Prop({ type: String, required: true })
   public source!: MaterialSource;
 
-  @Getter(StoreGetter.getAllRequirements)
-  private allRequirements!: RequirementsStore;
-
   private get requirementsForThisSource(): RequiredItem[] {
     return filter(
-      this.allRequirements,
-      (r): boolean => {
-        const sourceMatches: boolean = r.material.source == this.source;
-        const hasQuantity: boolean = r.quantity > 0;
-
-        return sourceMatches && hasQuantity;
-      }
+      this.activeRequirements,
+      (r): boolean => r.material.source == this.source
     );
   }
 }

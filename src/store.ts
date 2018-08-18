@@ -10,8 +10,10 @@ import {
   RequirementsStore
 } from "@/game-types/RootState";
 import MineArea from "@/game-types/MineArea";
-import { Dictionary } from "lodash";
-import RequiredItem from "@/game-types/RequiredItem";
+import { Dictionary, filter, keyBy } from "lodash";
+import { RequiredItem } from "@/game-types/RequiredItem";
+import { DemandItem } from "@/game-types/DemandItem";
+import { DemandInventoryItem } from "@/game-types/DemandInventoryItem";
 
 Vue.use(Vuex);
 
@@ -40,12 +42,15 @@ function addRequirementsForDemand(
       let componentMaterial: Material =
         inventory[component.materialName].material;
       if (!requirementsCollection[component.materialName]) {
-        requirementsCollection[component.materialName] = new RequiredItem(
-          componentMaterial,
-          inventory[component.materialName]
+        Vue.set(
+          requirementsCollection,
+          component.materialName,
+          new RequiredItem(componentMaterial, inventory[component.materialName])
         );
       }
-      requirementsCollection[component.materialName].requiredBy.push(demand);
+      requirementsCollection[component.materialName].requiredBy.push(
+        new DemandItem(demand)
+      );
       addRequirementsForDemand(
         requirementsCollection,
         {
@@ -58,8 +63,25 @@ function addRequirementsForDemand(
   }
 }
 
+function getActiveDemandsFromStore<T extends DemandInventoryItem>(
+  store: Dictionary<T>
+): Dictionary<T> {
+  return keyBy(
+    filter(
+      store,
+      (d: T): boolean => {
+        return d.isDemanded;
+      }
+    ),
+    (i: T): string => {
+      return i.material.name;
+    }
+  );
+}
+
 export enum StoreGetter {
-  getAllRequirements = "getAllRequirements"
+  getActiveRequirements = "getActiveRequirements",
+  getActiveDemands = "getActiveDemands"
 }
 
 export enum StoreMutation {
@@ -84,48 +106,15 @@ export default new Vuex.Store<RootState>({
   state: {
     inventory: {} as InventoryStore,
     demands: {} as DemandsStore,
-    gameData: {} as GameDataStore
+    gameData: {} as GameDataStore,
+    requirements: {} as RequirementsStore
   },
   getters: {
-    // maybeGetDemandForMaterial(
-    //   state
-    // ): (material: Material) => InventoryItem | undefined {
-    //   return (material: Material): InventoryItem | undefined => {
-    //     return state.demands[material.name];
-    //   };
-    // },
-    // getInventoryItemQuantity(state): (material: Material) => number {
-    //   return (material: Material): number => {
-    //     return state.inventory[material.name]
-    //       ? state.inventory[material.name].quantity
-    //       : 0;
-    //   };
-    // },
-    // getDemandQuantity(state): (material: Material) => number {
-    //   return (material: Material): number => {
-    //     return state.inventory[material.name]
-    //       ? state.inventory[material.name].quantity
-    //       : 0;
-    //   };
-    // },
-    [StoreGetter.getAllRequirements]: function(state): RequirementsStore {
-      const newRequirements: RequirementsStore = {};
-      for (const materialName in state.demands) {
-        const demand: InventoryItem = state.demands[materialName];
-        if (!newRequirements[demand.material.name]) {
-          newRequirements[demand.material.name] = new RequiredItem(
-            demand.material,
-            state.inventory[demand.material.name]
-          );
-        }
-
-        newRequirements[demand.material.name].requiredBy.push({
-          material: demand.material,
-          quantity: demand.quantity
-        } as InventoryItem);
-        addRequirementsForDemand(newRequirements, demand, state.inventory);
-      }
-      return newRequirements;
+    [StoreGetter.getActiveDemands](state): DemandsStore {
+      return getActiveDemandsFromStore<DemandItem>(state.demands);
+    },
+    [StoreGetter.getActiveRequirements](state): RequirementsStore {
+      return getActiveDemandsFromStore<RequiredItem>(state.requirements);
     }
   },
   mutations: {
@@ -141,7 +130,44 @@ export default new Vuex.Store<RootState>({
       else Vue.set(state.inventory, item.material.name, item);
     },
     [StoreMutation.updateDemand](state, newDemand: InventoryItem): void {
-      Vue.set(state.demands, newDemand.material.name, newDemand);
+      if (!state.demands[newDemand.material.name]) {
+        Vue.set(
+          state.demands,
+          newDemand.material.name,
+          new DemandItem(newDemand)
+        );
+      } else {
+        Vue.set(
+          state.demands[newDemand.material.name],
+          "quantity",
+          newDemand.quantity
+        );
+      }
+
+      if (!state.requirements[newDemand.material.name]) {
+        state.requirements[newDemand.material.name] = new RequiredItem(
+          newDemand.material,
+          state.inventory[newDemand.material.name],
+          state.demands[newDemand.material.name]
+        );
+      } else {
+        const rootDemand = state.requirements[
+          newDemand.material.name
+        ].requiredBy.find(
+          (r): boolean =>
+            r.material.name == newDemand.material.name &&
+            r instanceof DemandItem
+        );
+        if (rootDemand) {
+          Vue.set(rootDemand, "quantity", newDemand.quantity);
+        } else {
+          state.requirements[newDemand.material.name].requiredBy.push(
+            state.demands[newDemand.material.name]
+          );
+        }
+      }
+
+      addRequirementsForDemand(state.requirements, newDemand, state.inventory);
     }
   },
   actions: {

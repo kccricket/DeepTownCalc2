@@ -10,7 +10,7 @@ import InventoryItem from "@/game-types/InventoryItem";
 import { State } from "vuex-class";
 import { StoreState } from "@/store";
 import { InventoryStore } from "@/game-types/RootState";
-import RequiredItem from "@/game-types/RequiredItem";
+import { RequiredItem } from "@/game-types/RequiredItem";
 
 @Component
 export default class RequirementRow extends Vue {
