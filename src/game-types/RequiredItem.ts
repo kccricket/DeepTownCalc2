@@ -5,7 +5,9 @@ import { DemandInventoryItem } from "@/game-types/DemandInventoryItem";
 
 export class RequiredItem implements DemandInventoryItem {
   public readonly material: Material;
-  public readonly requiredBy: InventoryItem[] = new Array<InventoryItem>();
+  public readonly requiredBy: DemandInventoryItem[] = new Array<
+    DemandInventoryItem
+  >();
   public readonly inventoryItem: InventoryItem;
   public get isDemanded(): boolean {
     return this.quantity > 0;
@@ -22,7 +24,7 @@ export class RequiredItem implements DemandInventoryItem {
   public constructor(
     thisMaterial: Material,
     inventoryItem: InventoryItem,
-    rootDemand?: InventoryItem
+    rootDemand?: DemandInventoryItem
   ) {
     this.material = thisMaterial;
     this.inventoryItem = inventoryItem;

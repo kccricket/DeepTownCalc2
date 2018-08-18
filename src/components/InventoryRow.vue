@@ -77,7 +77,7 @@ export default class InventoryRow extends Vue {
   private set inventoryQuantity(quantity: number) {
     this.setInventoryItemQuantity({
       material: this.material,
-      quantity
+      quantity: quantity ? quantity : 0
     } as InventoryItem);
   }
 }

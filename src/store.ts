@@ -33,7 +33,7 @@ class RequirementItem implements InventoryItem {
 
 function addRequirementsForDemand(
   requirementsCollection: RequirementsStore,
-  demand: InventoryItem,
+  demand: DemandInventoryItem,
   inventory: InventoryStore
 ): void {
   const requiredComponents = demand.material.components;
@@ -49,14 +49,14 @@ function addRequirementsForDemand(
         );
       }
       requirementsCollection[component.materialName].requiredBy.push(
-        new DemandItem(demand)
+        requirementsCollection[demand.material.name]
       );
       addRequirementsForDemand(
         requirementsCollection,
         {
           material: componentMaterial,
           quantity: demand.quantity * component.quantity
-        } as InventoryItem,
+        } as DemandInventoryItem,
         inventory
       );
     }
@@ -130,6 +130,8 @@ export default new Vuex.Store<RootState>({
       else Vue.set(state.inventory, item.material.name, item);
     },
     [StoreMutation.updateDemand](state, newDemand: InventoryItem): void {
+      let newRequirements = {} as RequirementsStore;
+
       if (!state.demands[newDemand.material.name]) {
         Vue.set(
           state.demands,
@@ -144,30 +146,59 @@ export default new Vuex.Store<RootState>({
         );
       }
 
-      if (!state.requirements[newDemand.material.name]) {
-        state.requirements[newDemand.material.name] = new RequiredItem(
-          newDemand.material,
-          state.inventory[newDemand.material.name],
-          state.demands[newDemand.material.name]
+      // for (const materialName in state.demands) {
+      //   const demand = state.demands[materialName];
+      //   if (!newRequirements[demand.material.name]) {
+      //     newRequirements[demand.material.name] = new RequiredItem(
+      //       demand.material,
+      //       state.inventory[demand.material.name],
+      //       state.demands[demand.material.name]
+      //     );
+      //   } else {
+      //     const rootDemand = newRequirements[
+      //       demand.material.name
+      //     ].requiredBy.find(
+      //       (r): boolean =>
+      //         r.material.name == demand.material.name && r instanceof DemandItem
+      //     );
+      //     if (rootDemand) {
+      //       Vue.set(rootDemand, "quantity", demand.quantity);
+      //     } else {
+      //       newRequirements[demand.material.name].requiredBy.push(
+      //         state.demands[demand.material.name]
+      //       );
+      //     }
+      //   }
+
+      //   addRequirementsForDemand(newRequirements, demand, state.inventory);
+      // }
+
+      // state.requirements = newRequirements;
+
+      const demand = state.demands[newDemand.material.name];
+      if (!state.requirements[demand.material.name]) {
+        state.requirements[demand.material.name] = new RequiredItem(
+          demand.material,
+          state.inventory[demand.material.name],
+          state.demands[demand.material.name]
         );
       } else {
         const rootDemand = state.requirements[
-          newDemand.material.name
+          demand.material.name
         ].requiredBy.find(
           (r): boolean =>
-            r.material.name == newDemand.material.name &&
-            r instanceof DemandItem
+            r.material.name == demand.material.name && r instanceof DemandItem
         );
         if (rootDemand) {
-          Vue.set(rootDemand, "quantity", newDemand.quantity);
+          Vue.set(rootDemand, "quantity", demand.quantity);
         } else {
-          state.requirements[newDemand.material.name].requiredBy.push(
-            state.demands[newDemand.material.name]
+          state.requirements[demand.material.name].requiredBy.push(
+            state.demands[demand.material.name]
           );
         }
       }
 
-      addRequirementsForDemand(state.requirements, newDemand, state.inventory);
+      addRequirementsForDemand(state.requirements, demand, state.inventory);
     }
   },
   actions: {
