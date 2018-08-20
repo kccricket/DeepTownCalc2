@@ -16,7 +16,7 @@ import MaterialSource from "@/game-types/MaterialSource";
 import { mapValues, values, uniq } from "lodash";
 import { StoreGetter } from "@/store";
 import { RequiredItem } from "@/game-types/RequiredItem";
-import { Dictionary } from "vuex";
+import { Dictionary } from "lodash";
 
 @Component({
   components: {

@@ -17,20 +17,6 @@ import { DemandInventoryItem } from "@/game-types/DemandInventoryItem";
 
 Vue.use(Vuex);
 
-class RequirementItem implements InventoryItem {
-  public readonly material: Material;
-  public readonly quantity: number;
-  public readonly displayQuantity: number;
-
-  //public constructor(thing: InventoryItem);
-  public constructor(thing: { material: Material; quantity: number }) {
-    this.material = thing.material;
-    const materialYield: number = thing.material.yield || 1;
-    this.quantity = Math.ceil(thing.quantity / materialYield);
-    this.displayQuantity = this.quantity * materialYield;
-  }
-}
-
 function addRequirementsForDemand(
   requirementsCollection: Dictionary<RequiredItem>,
   demand: DemandInventoryItem,
@@ -66,22 +52,6 @@ function addRequirementsForDemand(
       );
     }
   }
-}
-
-function getActiveDemandsFromStore<T extends DemandInventoryItem>(
-  store: Dictionary<T | undefined>
-): Dictionary<T | undefined> {
-  return keyBy(
-    filter(
-      store,
-      (d): boolean => {
-        return d !== undefined && d.isDemanded;
-      }
-    ) as T[],
-    (i): string => {
-      return i.material.name;
-    }
-  );
 }
 
 export enum StoreGetter {

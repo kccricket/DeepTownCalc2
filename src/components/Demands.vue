@@ -18,7 +18,7 @@ import DemandRow from "@/components/DemandRow.vue";
 import Component from "vue-class-component";
 import { Getter } from "vuex-class";
 import { StoreGetter } from "@/store";
-import { Dictionary } from "vuex";
+import { Dictionary } from "lodash";
 import { RequiredItem } from "@/game-types/RequiredItem";
 
 @Component({
