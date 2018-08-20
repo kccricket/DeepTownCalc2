@@ -8,7 +8,8 @@
         v-for="material in gameData.materials"
         :label="material.name"
         :key="material.name"
-        :value="material" />
+        :value="material"
+        :disabled="materialIsDemanded(material.name)" />
     </el-select>
     <!-- <el-cascader
       v-model="newDemand.materialName"
@@ -32,11 +33,13 @@ import Vue from "vue";
 import Material from "@/game-types/Material";
 import InventoryItem from "@/game-types/InventoryItem";
 import Component from "vue-class-component";
-import { State, Mutation } from "vuex-class";
-import { StoreState, StoreMutation } from "@/store";
+import { State, Mutation, Getter } from "vuex-class";
+import { StoreState, StoreMutation, StoreGetter } from "@/store";
 import { GameDataStore } from "@/game-types/RootState";
 import { Select, Option, InputNumber, Button, Cascader } from "element-ui";
 import MaterialSource from "@/game-types/MaterialSource";
+import { Dictionary } from "vuex";
+import { DemandItem } from "@/game-types/DemandItem";
 
 interface CascadeEntry {
   value: string | Material;
@@ -55,6 +58,9 @@ interface CascadeEntry {
   }
 })
 export default class DemandInput extends Vue {
+  @Getter(StoreGetter.getActiveDemands)
+  private activeDemands!: Dictionary<DemandItem>;
+
   @Mutation(StoreMutation.updateDemand)
   private updateDemand!: (newDemand: InventoryItem) => void;
 
@@ -107,6 +113,11 @@ export default class DemandInput extends Vue {
   private clearDemandInput(): void {
     this.newDemandMaterial = {} as Material;
     this.newDemandQuantity = 1;
+  }
+
+  private materialIsDemanded(materialName: string): boolean {
+    const demand = this.activeDemands[materialName];
+    return demand ? demand.isDemanded : false;
   }
 }
 </script>
