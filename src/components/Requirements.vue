@@ -12,11 +12,11 @@ import Vue from "vue";
 import Component from "vue-class-component";
 import RequirementSourceBlock from "@/components/RequirementSourceBlock.vue";
 import { Getter } from "vuex-class";
-import InventoryItem from "@/game-types/InventoryItem";
 import MaterialSource from "@/game-types/MaterialSource";
 import { mapValues, values, uniq } from "lodash";
-import { RequirementsStore } from "@/game-types/RootState";
 import { StoreGetter } from "@/store";
+import { RequiredItem } from "@/game-types/RequiredItem";
+import { Dictionary } from "vuex";
 
 @Component({
   components: {
@@ -24,13 +24,16 @@ import { StoreGetter } from "@/store";
   }
 })
 export default class Requirements extends Vue {
-  @Getter(StoreGetter.getAllRequirements)
-  private allRequirements!: RequirementsStore;
+  @Getter(StoreGetter.getActiveRequirements)
+  private activeRequirements!: Dictionary<RequiredItem>;
 
   private get materialSources(): MaterialSource[] {
     return uniq(
       values(
-        mapValues(this.allRequirements, (r: InventoryItem) => r.material.source)
+        mapValues(
+          this.activeRequirements,
+          (r: RequiredItem) => r.material.source
+        )
       )
     );
   }

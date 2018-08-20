@@ -17,10 +17,9 @@ import { Prop } from "vue-property-decorator";
 import MaterialSource from "@/game-types/MaterialSource";
 import { Getter } from "vuex-class";
 import { StoreGetter } from "@/store";
-import InventoryItem from "@/game-types/InventoryItem";
-import { filter } from "lodash";
+import { Dictionary, filter } from "lodash";
 import RequirementRow from "@/components/RequirementRow.vue";
-import { RequirementsStore } from "@/game-types/RootState";
+import { RequiredItem } from "@/game-types/RequiredItem";
 
 @Component({
   components: {
@@ -28,16 +27,16 @@ import { RequirementsStore } from "@/game-types/RootState";
   }
 })
 export default class RequirementSourceBlock extends Vue {
+  @Getter(StoreGetter.getActiveRequirements)
+  private activeRequirements!: Dictionary<RequiredItem>;
+
   @Prop({ type: String, required: true })
   public source!: MaterialSource;
 
-  @Getter(StoreGetter.getAllRequirements)
-  private allRequirements!: RequirementsStore;
-
-  private get requirementsForThisSource(): InventoryItem[] {
+  private get requirementsForThisSource(): RequiredItem[] {
     return filter(
-      this.allRequirements,
-      r => r.material.source == this.source && r.quantity > 0
+      this.activeRequirements,
+      (r): boolean => r.material.source == this.source
     );
   }
 }

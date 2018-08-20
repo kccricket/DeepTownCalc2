@@ -45,11 +45,16 @@ export default class DemandRow extends Vue {
     return this.demand.quantity;
   }
   private set demandQuantity(quantity: number) {
-    this.updateDemand({ ...this.demand, quantity } as InventoryItem);
+    this.updateDemand({
+      ...this.demand,
+      quantity: quantity ? quantity : 1
+    } as InventoryItem);
+    this.$emit("update-demand-quantity", this.demand);
   }
 
   private removeDemand(): void {
-    this.$emit("remove-demand", this.demand.material.name);
+    this.updateDemand({ ...this.demand, quantity: 0 } as InventoryItem);
+    this.$emit("remove-demand", this.demand);
   }
 }
 </script>

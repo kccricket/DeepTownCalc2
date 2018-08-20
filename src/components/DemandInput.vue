@@ -17,7 +17,7 @@
     <el-input-number
       v-model="newDemandQuantity"
       :controls="false"
-      :min="0" />
+      :min="1" />
     <el-button
       :disabled="!inputIsValid"
       icon="el-icon-plus"
@@ -37,7 +37,6 @@ import { StoreState, StoreMutation } from "@/store";
 import { GameDataStore } from "@/game-types/RootState";
 import { Select, Option, InputNumber, Button, Cascader } from "element-ui";
 import MaterialSource from "@/game-types/MaterialSource";
-import QuantifiedMaterial from "@/game-types/QuantifiedMaterial";
 
 interface CascadeEntry {
   value: string | Material;
@@ -63,7 +62,7 @@ export default class DemandInput extends Vue {
   private gameData!: GameDataStore;
 
   private newDemandMaterial: Material = {} as Material;
-  private newDemandQuantity: number = 0;
+  private newDemandQuantity: number = 1;
 
   private get inputIsValid(): boolean {
     if (this.newDemandMaterial && this.newDemandQuantity > 0) return true;
@@ -107,7 +106,7 @@ export default class DemandInput extends Vue {
 
   private clearDemandInput(): void {
     this.newDemandMaterial = {} as Material;
-    this.newDemandQuantity = 0;
+    this.newDemandQuantity = 1;
   }
 }
 </script>

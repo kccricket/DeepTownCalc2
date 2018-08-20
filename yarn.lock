@@ -4113,6 +4113,10 @@ internal-ip@1.2.0:
   dependencies:
     meow "^3.3.0"
 
+interspell@^0.3.7:
+  version "0.3.7"
+  resolved "https://registry.yarnpkg.com/interspell/-/interspell-0.3.7.tgz#49530c75cfc8726e13586c9ad85a37cb2e1beba3"
+
 invariant@^2.2.0, invariant@^2.2.2:
   version "2.2.4"
   resolved "https://registry.yarnpkg.com/invariant/-/invariant-2.2.4.tgz#610f3c92c9359ce1db616e538008d23ff35158e6"
@@ -7747,10 +7751,6 @@ timers-browserify@^2.0.4:
   resolved "https://registry.yarnpkg.com/timers-browserify/-/timers-browserify-2.0.10.tgz#1d28e3d2aadf1d5a5996c4e9f95601cd053480ae"
   dependencies:
     setimmediate "^1.0.4"
-
-timespan@^2.3.0:
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/timespan/-/timespan-2.3.0.tgz#4902ce040bd13d845c8f59b27e9d59bad6f39929"
 
 timsort@^0.3.0:
   version "0.3.0"
