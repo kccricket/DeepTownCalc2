@@ -2,6 +2,7 @@ import InventoryItem from "@/game-types/InventoryItem";
 import Material from "@/game-types/Material";
 import MaterialComponent from "@/game-types/MaterialComponent";
 import { DemandInventoryItem } from "@/game-types/DemandInventoryItem";
+import { DemandItem } from "@/game-types/DemandItem";
 
 export class RequiredItem implements DemandInventoryItem {
   public readonly material: Material;
@@ -9,8 +10,25 @@ export class RequiredItem implements DemandInventoryItem {
     DemandInventoryItem
   >();
   public readonly inventoryItem: InventoryItem;
+
   public get isDemanded(): boolean {
-    return this.quantity > 0;
+    return (
+      this.requiredBy.filter(
+        (r): boolean => r instanceof DemandItem && r.unadjustedQuantity > 0
+      ) != undefined
+    );
+  }
+
+  public get isRequired(): boolean {
+    return (
+      this.requiredBy.filter(
+        (r): boolean => r instanceof RequiredItem && r.unadjustedQuantity > 0
+      ) != undefined
+    );
+  }
+
+  public get isSatisfied(): boolean {
+    return this.quantity == 0;
   }
 
   private get materialYield(): number {
@@ -32,10 +50,39 @@ export class RequiredItem implements DemandInventoryItem {
   }
 
   public get displayQuantity(): number {
-    return this.yieldCount * this.materialYield;
+    return this.quantity * this.materialYield;
   }
 
-  public get quantity(): number {
+  public get unadjustedQuantity(): number {
+    let units: number = 0;
+
+    for (const itemRequiringThisMateiral of this.requiredBy) {
+      if (itemRequiringThisMateiral.material.name == this.material.name) {
+        units += itemRequiringThisMateiral.unadjustedQuantity;
+      } else {
+        const componentsOfItemRequiringThisMaterial =
+          itemRequiringThisMateiral.material.components;
+
+        if (componentsOfItemRequiringThisMaterial) {
+          const materialComponentOfTheItemRequiringThisMaterial = componentsOfItemRequiringThisMaterial.find(
+            (c: MaterialComponent): boolean => {
+              return c.materialName == this.material.name;
+            }
+          );
+
+          if (materialComponentOfTheItemRequiringThisMaterial) {
+            units +=
+              materialComponentOfTheItemRequiringThisMaterial.quantity *
+              itemRequiringThisMateiral.unadjustedQuantity;
+          }
+        }
+      }
+    }
+
+    return units;
+  }
+
+  public get rawQuantity(): number {
     let units: number = 0;
 
     for (const itemRequiringThisMateiral of this.requiredBy) {
@@ -61,9 +108,12 @@ export class RequiredItem implements DemandInventoryItem {
       }
     }
 
-    units -= this.inventoryItem.quantity;
+    return units;
+  }
 
-    return units < 0 ? 0 : units;
+  public get quantity(): number {
+    const units = this.rawQuantity - this.inventoryItem.quantity;
+    return units < 0 ? 0 : Math.ceil(units / this.materialYield);
   }
 
   public getSecondsToMake(generatorUnits: number = 1): number | undefined {

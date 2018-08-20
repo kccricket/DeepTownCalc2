@@ -1,5 +1,4 @@
 import Material from "@/game-types/Material";
-import { RequiredItem } from "@/game-types/RequiredItem";
 import { DemandInventoryItem } from "@/game-types/DemandInventoryItem";
 
 export class DemandItem implements DemandInventoryItem {
@@ -13,5 +12,13 @@ export class DemandItem implements DemandInventoryItem {
 
   public get isDemanded(): boolean {
     return this.quantity > 0;
+  }
+
+  public get rawQuantity(): number {
+    return this.quantity;
+  }
+
+  public get unadjustedQuantity(): number {
+    return this.quantity;
   }
 }

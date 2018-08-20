@@ -15,12 +15,11 @@
 import Vue from "vue";
 import DemandInput from "@/components/DemandInput.vue";
 import DemandRow from "@/components/DemandRow.vue";
-import InventoryItem from "@/game-types/InventoryItem";
 import Component from "vue-class-component";
-import { State, Getter } from "vuex-class";
-import { StoreState, StoreGetter } from "@/store";
-import { DemandsStore } from "@/game-types/RootState";
-import { DemandItem } from "@/game-types/DemandItem";
+import { Getter } from "vuex-class";
+import { StoreGetter } from "@/store";
+import { Dictionary } from "vuex";
+import { RequiredItem } from "@/game-types/RequiredItem";
 
 @Component({
   components: {
@@ -30,6 +29,6 @@ import { DemandItem } from "@/game-types/DemandItem";
 })
 export default class Demands extends Vue {
   @Getter(StoreGetter.getActiveDemands)
-  private activeDemands!: DemandsStore;
+  private activeDemands!: Dictionary<RequiredItem>;
 }
 </script>

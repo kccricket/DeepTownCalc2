@@ -6,10 +6,6 @@
 import Vue from "vue";
 import Component from "vue-class-component";
 import { Prop } from "vue-property-decorator";
-import InventoryItem from "@/game-types/InventoryItem";
-import { State } from "vuex-class";
-import { StoreState } from "@/store";
-import { InventoryStore } from "@/game-types/RootState";
 import { RequiredItem } from "@/game-types/RequiredItem";
 
 @Component

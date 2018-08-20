@@ -15,12 +15,10 @@ import Vue from "vue";
 import Component from "vue-class-component";
 import { Prop } from "vue-property-decorator";
 import MaterialSource from "@/game-types/MaterialSource";
-import { Getter, State } from "vuex-class";
+import { Getter } from "vuex-class";
 import { StoreGetter } from "@/store";
-import InventoryItem from "@/game-types/InventoryItem";
-import { filter, keyBy } from "lodash";
+import { Dictionary, filter } from "lodash";
 import RequirementRow from "@/components/RequirementRow.vue";
-import { RequirementsStore, RootState } from "@/game-types/RootState";
 import { RequiredItem } from "@/game-types/RequiredItem";
 
 @Component({
@@ -30,7 +28,7 @@ import { RequiredItem } from "@/game-types/RequiredItem";
 })
 export default class RequirementSourceBlock extends Vue {
   @Getter(StoreGetter.getActiveRequirements)
-  private activeRequirements!: RequirementsStore;
+  private activeRequirements!: Dictionary<RequiredItem>;
 
   @Prop({ type: String, required: true })
   public source!: MaterialSource;

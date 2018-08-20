@@ -37,7 +37,6 @@ import { StoreState, StoreMutation } from "@/store";
 import { GameDataStore } from "@/game-types/RootState";
 import { Select, Option, InputNumber, Button, Cascader } from "element-ui";
 import MaterialSource from "@/game-types/MaterialSource";
-import QuantifiedMaterial from "@/game-types/QuantifiedMaterial";
 
 interface CascadeEntry {
   value: string | Material;

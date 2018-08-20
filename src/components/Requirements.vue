@@ -14,9 +14,9 @@ import RequirementSourceBlock from "@/components/RequirementSourceBlock.vue";
 import { Getter } from "vuex-class";
 import MaterialSource from "@/game-types/MaterialSource";
 import { mapValues, values, uniq } from "lodash";
-import { RequirementsStore } from "@/game-types/RootState";
 import { StoreGetter } from "@/store";
 import { RequiredItem } from "@/game-types/RequiredItem";
+import { Dictionary } from "vuex";
 
 @Component({
   components: {
@@ -25,7 +25,7 @@ import { RequiredItem } from "@/game-types/RequiredItem";
 })
 export default class Requirements extends Vue {
   @Getter(StoreGetter.getActiveRequirements)
-  private activeRequirements!: RequirementsStore;
+  private activeRequirements!: Dictionary<RequiredItem>;
 
   private get materialSources(): MaterialSource[] {
     return uniq(

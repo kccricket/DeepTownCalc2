@@ -6,8 +6,8 @@ import { RequiredItem } from "@/game-types/RequiredItem";
 import { DemandItem } from "@/game-types/DemandItem";
 
 export type InventoryStore = Dictionary<InventoryItem>;
-export type DemandsStore = Dictionary<DemandItem>;
-export type RequirementsStore = Dictionary<RequiredItem>;
+export type DemandsStore = Dictionary<DemandItem | undefined>;
+export type RequirementsStore = Dictionary<RequiredItem | undefined>;
 
 export interface GameDataStore {
   readonly materials: Dictionary<Material>;

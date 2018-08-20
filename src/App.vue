@@ -86,11 +86,15 @@ body {
 
 /* stylelint-disable selector-class-pattern */
 .material-demanded .el-input__inner {
+  background-color: rgb(255, 250, 181);
+}
+
+.material-required .el-input__inner {
   background-color: #fcc;
 }
 
-.material-demand-satisfied .el-input__inner {
-  background-color: #6a6;
+.material-requirement-satisfied .el-input__inner {
+  background-color: rgb(151, 218, 151);
 }
 /* stylelint-enable selector-class-pattern */
 
