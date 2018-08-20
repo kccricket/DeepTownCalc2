@@ -10,7 +10,7 @@ import {
   RequirementsStore
 } from "@/game-types/RootState";
 import MineArea from "@/game-types/MineArea";
-import { Dictionary, filter, keyBy } from "lodash";
+import { Dictionary, filter, keyBy, fromPairs, toPairs, sortBy } from "lodash";
 import { RequiredItem } from "@/game-types/RequiredItem";
 import { DemandItem } from "@/game-types/DemandItem";
 import { DemandInventoryItem } from "@/game-types/DemandInventoryItem";
@@ -218,17 +218,23 @@ export default new Vuex.Store<RootState>({
 
       const materials = {} as Dictionary<Material>;
       for (const material of materialsData) {
+        if (materials[material.name])
+          console.warn(`Ignoring duplicate material ${material.name}.`);
         Vue.set(materials, material.name, material);
       }
+      const sortedMaterials = fromPairs(sortBy(toPairs(materials), [0]));
 
       const mines = new Array<MineArea>();
       for (const mine of minesData) {
+        if (mines[mine.area])
+          console.warn(`Ignoring duplicate mine ${mine.area}.`);
         Vue.set(mines, mine.area, mine);
       }
+      const sortedMines = sortBy(mines, ["area"]);
 
       const newGameData: GameDataStore = {
-        materials,
-        mines
+        materials: sortedMaterials,
+        mines: sortedMines
       };
 
       context.commit(StoreMutation.setGameData, newGameData);
